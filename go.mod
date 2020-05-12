@@ -1,1 +1,0 @@
-module "kbone-shop-service-develop"
