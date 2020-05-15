@@ -1,0 +1,34 @@
+{
+    "editor.formatOnSave": false,
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4,
+    "workbench.settings.openDefaultSettings": false,
+    "go.useLanguageServer": true,
+    "go.buildOnSave": "workspace",
+    "go.lintOnSave": "package",
+    "go.vetOnSave": "package",
+    "go.buildTags": "",
+    "go.buildFlags": [],
+    "go.lintFlags": [],
+    "go.vetFlags": [],
+    "go.coverOnSave": false,
+    "go.useCodeSnippetsOnFunctionSuggest": false,
+    "go.formatOnSave": false,
+    "go.formatTool": "goimports",
+    "go.goroot": "D:/programs/golang/go1.14.2/go",
+    "go.gopath": "D:/programs/golang/gopath",
+    "go.gocodeAutoBuild": true,
+    "go.toolsGopath": "D:/programs/golang/gopath",
+    "files.autoSave": "onFocusChange",
+    "go.languageServerExperimentalFeatures": {
+        "format": true,
+        "autoComplete": true
+    },
+    "[go]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": false,
+            "editor.formatOnSave": false,
+        },
+    },
+    "files.autoGuessEncoding": true,     
+}
