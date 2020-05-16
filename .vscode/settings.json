@@ -15,7 +15,7 @@
     "go.useCodeSnippetsOnFunctionSuggest": false,
     "go.formatOnSave": false,
     "go.formatTool": "goimports",
-    "go.goroot": "D:/programs/golang/go1.14.2/go",
+    "go.goroot": "D:/programs/golang/go",
     "go.gopath": "D:/programs/golang/gopath",
     "go.gocodeAutoBuild": true,
     "go.toolsGopath": "D:/programs/golang/gopath",

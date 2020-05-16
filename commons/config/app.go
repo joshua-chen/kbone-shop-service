@@ -3,7 +3,6 @@ package config
 import (
 	"encoding/json"
 	"os"
-
 )
 
 type AppConfig struct {
@@ -15,8 +14,7 @@ type AppConfig struct {
 
 var ServConfig AppConfig
 
-// 初始化服务器配置
-func GetConfig() *AppConfig {
+func GetAppConfig() *AppConfig {
 	file, err := os.Open("config/app.json")
 	if err != nil {
 		panic(err.Error())

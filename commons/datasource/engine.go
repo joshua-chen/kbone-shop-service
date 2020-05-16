@@ -1,9 +1,8 @@
-0package datasource
+package datasource
 
 import (
 	_ "github.com/go-sql-driver/mysql" //不能忘记导入
 	"github.com/go-xorm/xorm"
-
 )
 
 /**

@@ -1,0 +1,21 @@
+basePath: /v2
+host: petstore.swagger.io
+info:
+  contact:
+    email: joshua_chen@qq.com
+    name: API Support
+    url: https://github.com/joshua-chen
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Product API
+  version: "1.0"
+paths:
+  /products:
+    get:
+      consumes:
+      - application/x-json-stream
+      description: 获取产品
+swagger: "2.0"

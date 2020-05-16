@@ -1,6 +1,6 @@
 {
     "appName": "CmsProject",
-    "port": "9000",
+    "port": "8080",
     "staticPath": "/manage/static",
     "env": "dev"  
 }
