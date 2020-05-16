@@ -1,4 +1,4 @@
-module product
+module user
 
 go 1.14
 
@@ -15,17 +15,17 @@ require (
 	github.com/go-openapi/swag v0.19.9 // indirect
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/go-xorm/xorm v0.7.9
-	github.com/golang/protobuf v1.3.3 // indirect
 	github.com/gorilla/schema v1.1.0 // indirect
 	github.com/iris-contrib/formBinder v5.0.0+incompatible // indirect
 	github.com/iris-contrib/httpexpect v1.1.2 // indirect
+	github.com/iris-contrib/middleware/cors v0.0.0-20191219204441-78279b78a367
 	github.com/iris-contrib/middleware/jwt v0.0.0-20191219204441-78279b78a367 // indirect
 	github.com/iris-contrib/swagger v0.0.0-20190414182803-dc27bb5ee4ec
 	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/juju/errors v0.0.0-20200330140219-3fe23663418f // indirect
 	github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 // indirect
 	github.com/kataras/golog v0.0.13 // indirect
-	github.com/kataras/iris v11.1.1+incompatible
+	github.com/kataras/iris v12.1.2
 	github.com/klauspost/compress v1.10.5 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mattn/go-colorable v0.1.6 // indirect
@@ -41,26 +41,29 @@ require (
 	golang.org/x/net v0.0.0-20200513185701-a91f0712d120 // indirect
 	golang.org/x/sys v0.0.0-20200515095857-1151b9dac4a9 // indirect
 	golang.org/x/tools v0.0.0-20200515220128-d3bf790afa53 // indirect
+	google.golang.org/protobuf v1.22.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 	moul.io/http2curl v1.0.0 // indirect
-	product/controllers v0.0.0
-	product/datamodels v0.0.0 // indirect
-	product/docs v0.0.0
- 	product/repositories v0.0.0-00010101000000-000000000000 // indirect
-	product/services v0.0.0 // indirect
+	user/controllers v0.0.0
+	user/datamodels v0.0.0 // indirect
+	user/docs v0.0.0
+	user/middleware v0.0.0-00010101000000-000000000000
+	user/repositories v0.0.0-00010101000000-000000000000 // indirect
+	user/services v0.0.0 // indirect
 )
 
 replace commons/config => ../../commons/config
 
 replace commons/mvc/models => ../../commons/mvc/models
 
-replace product/datamodels => ../product/datamodels
+replace user/datamodels => ../user/datamodels
 
-replace product/repositories => ../product/repositories
+replace user/repositories => ../user/repositories
 
-replace product/services => ../product/services
+replace user/services => ../user/services
 
- 
-replace product/controllers => ../product/controllers
+replace user/middleware => ../user/middleware
 
-replace product/docs => ../product/docs
+replace user/controllers => ../user/controllers
+
+replace user/docs => ../user/docs

@@ -30,5 +30,23 @@
             "editor.formatOnSave": false,
         },
     },
-    "files.autoGuessEncoding": true,     
+    "files.autoGuessEncoding": true,
+    // 文件头部注释
+    "fileheader.customMade": {
+        "Descripttion": "",
+        "version": "",
+        "Author": "joshua",
+        "Date": "Do not edit",
+        "LastEditors": "joshua",
+        "LastEditTime": "Do not Edit"
+    },
+    //函数注释
+    "fileheader.cursorMode": {
+        "description": "",
+        "version": "1.0",
+        "accept": "",
+        "router": "",
+        "param": "",
+        "return": "",        
+ 
 }
