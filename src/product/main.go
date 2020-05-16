@@ -16,7 +16,7 @@ import (
 
 // @title Swagger Product API
 // @version 1.0
-// @description This is a sample server Petstore server.
+// @description Product server.
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name API Support
@@ -43,7 +43,7 @@ func main() {
 	// swaggerUI // use ginSwagger middleware to
 	//
 	swaggerConfig := &swagger.Config{
-		URL: "http://localhost:" + appConfig.Port + "/swagger/doc.json", //The url pointing to API definition
+		URL: "/swagger/doc.json", //The url pointing to API definition
 	}
 	// use swagger middleware to
 	app.Get("/swagger/{any:path}", swagger.CustomWrapHandler(swaggerConfig, swaggerFiles.Handler))
