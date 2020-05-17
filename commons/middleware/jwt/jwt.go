@@ -4,21 +4,22 @@
  * @Author: sueRimn
  * @Date: 2020-05-16 23:24:17
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-17 00:51:09
+ * @LastEditTime: 2020-05-17 19:01:05
  */
-package middleware
+package jwt
 
 import (
-	"user/datamodels"
-	_"commons/mvc/models"
+	"commons/datamodels"
+	_ "commons/mvc/models"
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
+	jwt "github.com/dgrijalva/jwt-go"
+	_ "github.com/dgrijalva/jwt-go/request"
+	_ "github.com/iris-contrib/middleware/cors"
 	jwtmiddleware "github.com/iris-contrib/middleware/jwt"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"github.com/spf13/cast"
 	_ "log"
 	"time"
-	_ "github.com/iris-contrib/middleware/cors"
 )
 
 const JwtKey = "percy"
@@ -30,18 +31,21 @@ func GetJWT() *jwtmiddleware.Middleware {
 			//自己加密的秘钥或者说盐值
 			return []byte(JwtKey), nil
 		},
+		Extractor: jwtmiddleware.FromParameter("token"),
 		//加密的方式
 		SigningMethod: jwt.SigningMethodHS256,
 		//验证未通过错误处理方式
-		/*ErrorHandler: func(ctx iris.Context, s string) {
+		/*
+			ErrorHandler: func(ctx iris.Context, s string) {
 
-			fmt.Println("错误:", s)
-			result := models.Result{Code: -1, Msg: "认证失败，请重新登录认证"}
-			i, err := ctx.JSON(result)
-			if err != nil {
-				log.Println(i, err)
-			}
-		},*/
+				fmt.Println("错误:", s)
+				result := models.Result{Code: -1, Msg: "认证失败，请重新登录认证"}
+				i, err := ctx.JSON(result)
+				if err != nil {
+					log.Println(i, err)
+				}
+			},
+		*/
 	})
 	return jwtHandler
 }
@@ -58,7 +62,7 @@ func CreateToken(user datamodels.User) string {
 		"exp":       time.Now().Add(10 * time.Hour * time.Duration(1)).Unix(), //过期时间
 	})
 	tokenString, _ := token.SignedString([]byte(JwtKey))
-	 
+
 	return tokenString
 }
 

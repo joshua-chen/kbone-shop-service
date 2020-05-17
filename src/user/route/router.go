@@ -1,11 +1,11 @@
 /*
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: joshua
  * @Date: 2020-05-17 00:11:13
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-17 00:15:35
- */ 
+ * @LastEditTime: 2020-05-17 16:45:16
+ */
 /*
  * @Descripttion:
  * @version:
@@ -20,8 +20,8 @@ package route
 import (
 	"../controllers"
 	"commons/mvc/models"
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/mvc"
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/mvc"
 	"net/http"
 )
 
