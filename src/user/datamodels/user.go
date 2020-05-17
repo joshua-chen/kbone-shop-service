@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-17 00:11:14
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-17 17:56:22
+ * @LastEditTime: 2020-05-17 19:14:48
  */
 package datamodels
 
@@ -14,13 +14,12 @@ import (
 
 type User struct {
 	commons.User
-	Name    string //姓名
-	Email   string //邮箱
-	Mobile  string //手机
-	QQ      string
-	Gender  int    //0男 1女
-	Age     int    //年龄
-	Remark  string //备注
-	Token   string `json:"-"`
-	Session string `json:"-"`
+	Name   string //姓名
+	Email  string //邮箱
+	Mobile string //手机
+	QQ     string
+	Gender int    //0男 1女
+	Age    int    //年龄
+	Remark string //备注
+
 }
