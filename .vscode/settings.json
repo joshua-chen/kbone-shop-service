@@ -14,7 +14,7 @@
     "go.coverOnSave": false,
     "go.useCodeSnippetsOnFunctionSuggest": false,
     "go.formatOnSave": false,
-    "go.formatTool": "goimports",
+    //"go.formatTool": "goimports",
     "go.goroot": "D:/programs/golang/go",
     "go.gopath": "D:/programs/golang/gopath",
     "go.gocodeAutoBuild": true,
@@ -40,7 +40,7 @@
         "LastEditors": "joshua",
         "LastEditTime": "Do not Edit"
     },
-    //函数注释
+    //函数注释/
     "fileheader.cursorMode": {
         "description": "",
         "version": "1.0",

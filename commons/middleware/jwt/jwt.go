@@ -4,25 +4,26 @@
  * @Author: sueRimn
  * @Date: 2020-05-16 23:24:17
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-17 19:01:05
+ * @LastEditTime: 2020-05-18 17:59:46
  */
 package jwt
 
 import (
-	"commons/datamodels"
-	_ "commons/mvc/models"
+	"commons/middleware/mvc/models"
 	"fmt"
+	_ "log"
+	"time"
+
 	jwt "github.com/dgrijalva/jwt-go"
 	_ "github.com/dgrijalva/jwt-go/request"
 	_ "github.com/iris-contrib/middleware/cors"
 	jwtmiddleware "github.com/iris-contrib/middleware/jwt"
 	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/context"
 	"github.com/spf13/cast"
-	_ "log"
-	"time"
 )
 
-const JwtKey = "percy"
+const JwtKey = "kboneshop"
 
 func GetJWT() *jwtmiddleware.Middleware {
 	jwtHandler := jwtmiddleware.New(jwtmiddleware.Config{
@@ -35,23 +36,26 @@ func GetJWT() *jwtmiddleware.Middleware {
 		//加密的方式
 		SigningMethod: jwt.SigningMethodHS256,
 		//验证未通过错误处理方式
-		/*
-			ErrorHandler: func(ctx iris.Context, s string) {
 
-				fmt.Println("错误:", s)
-				result := models.Result{Code: -1, Msg: "认证失败，请重新登录认证"}
-				i, err := ctx.JSON(result)
-				if err != nil {
-					log.Println(i, err)
-				}
-			},
-		*/
+		ErrorHandler: func(ctx context.Context, err error) {
+			if err == nil {
+				return
+			}
+
+			ctx.StopExecution()
+			ctx.StatusCode(iris.StatusUnauthorized)
+			ctx.JSON(models.ResponseResult{
+				Code:    "501",
+				Msg:     err.Error(),
+				Success: false,
+			})
+		},
 	})
 	return jwtHandler
 }
 
 //生成token
-func CreateToken(user datamodels.User) string {
+func NewToken(user User) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"nick_name": user.Username,                                            //用户信息
 		"session":   user.Session,                                             //session
@@ -88,7 +92,7 @@ func GetToken(ctx iris.Context) string {
 	}
 	return token
 }
-func GetUserId(token string) int {
+func GetUserID(token string) int {
 	var userId = 0
 	if token != "" && token != "undefined" && len(token) > 7 {
 		v, _ := ParseToken(token, JwtKey)

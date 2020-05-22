@@ -1,0 +1,5 @@
+port: 8080
+ignoreURLs: [/, /user/login, /user/registe, /login_pwd]
+jwtTimeout: 900 #second
+logLevel: debug
+secret: xxx-Secret

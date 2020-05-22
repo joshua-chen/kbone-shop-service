@@ -1,30 +1,26 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: joshua
+ * @Date: 2020-05-18 09:21:47
+ * @LastEditors: joshua
+ * @LastEditTime: 2020-05-22 14:13:06
+ */
 package config
 
 import (
-	"encoding/json"
-	"os"
+	_ "io/ioutil"
+
+	_ "github.com/kataras/golog"
+	_ "gopkg.in/yaml.v2"
 )
 
-type AppConfig struct {
-	AppName    string `json:"appName"`
-	Port       string `json:"port"`
-	StaticPath string `json:"staticPath"`
-	Env        string `json:"env"`
-}
+var AppConfig AppInfo
 
-var ServConfig AppConfig
-
-func GetAppConfig() *AppConfig {
-	file, err := os.Open("config/app.json")
-	if err != nil {
-		panic(err.Error())
-	}
-	decoder := json.NewDecoder(file)
-	conf := AppConfig{}
-	err = decoder.Decode(&conf)
-	if err != nil {
-		panic(err.Error())
-	}
-	return &conf
-
+type AppInfo struct {
+	Port       string   `yaml:"port"`
+	IgnoreURLs []string `yaml:"ignoreUrls"`
+	JWTTimeout int64    `yaml:"jwtTimeout"`
+	LogLevel   string   `yaml:"logLevel"`
+	Secret     string   `yaml:"secret"`
 }
