@@ -3,6 +3,8 @@ package repositories
 import (
 	"errors"
 	"sync"
+	"commons/datasource"
+	"commons/mvc/models"
 	"shop/datamodels"
 
 )
@@ -14,25 +16,24 @@ type ProductQuery func(datamodels.Product) bool
 // 这是一个以测试为目的的接口，即是一个内存中的product库
 // 或是一个连接到数据库的实例。
 type ProductRepository interface {
-	Exec(query ProductQuery, action ProductQuery, limit int, mode int) (ok bool)
 
 	Select(query ProductQuery) (product datamodels.Product, found bool)
-	SelectMany(query ProductQuery, limit int) (results []datamodels.Product)
-
+	SelectMany( page *models.Pagination) ([]*datamodels.Product, int64) 
 	InsertOrUpdate(product datamodels.Product) (updatedProduct datamodels.Product, err error)
 	Delete(query ProductQuery, limit int) (deleted bool)
 }
 
 // NewProductRepository返回一个新的基于内存的product库。
 // 库的类型在我们的例子中是唯一的。
-func NewProductRepository(source map[int64]datamodels.Product) ProductRepository {
-	return &productMemoryRepository{source: source}
+func NewProductRepository() ProductRepository {
+	return &productMemoryRepository{}
 }
+ 
 
 // productMemoryRepository就是一个"ProductRepository"
 // 它负责存储于内存中的实例数据(map)
 type productMemoryRepository struct {
-	source map[int64]datamodels.Product
+	ds map[int64]datamodels.Product
 	mu     sync.RWMutex
 }
 
@@ -43,32 +44,7 @@ const (
 	ReadWriteMode
 )
 
-func (r *productMemoryRepository) Exec(query ProductQuery, action ProductQuery, actionLimit int, mode int) (ok bool) {
-	loops := 0
-
-	if mode == ReadOnlyMode {
-		r.mu.RLock()
-		defer r.mu.RUnlock()
-	} else {
-		r.mu.Lock()
-		defer r.mu.Unlock()
-	}
-
-	for _, product := range r.source {
-		ok = query(product)
-		if ok {
-			if action(product) {
-				loops++
-				if actionLimit >= loops {
-					break // break
-				}
-			}
-		}
-	}
-
-	return
-}
-
+ 
 // Select方法会收到一个查询方法
 // 这个方法给出一个单独的product实例
 // 直到这个功能返回为true时停止迭代。
@@ -81,29 +57,33 @@ func (r *productMemoryRepository) Exec(query ProductQuery, action ProductQuery, 
 // 我基本在所有会用到的地方使用自从我想到了它
 // 也希望你们觉得好用
 func (r *productMemoryRepository) Select(query ProductQuery) (product datamodels.Product, found bool) {
-	found = r.Exec(query, func(m datamodels.Product) bool {
-		product = m
-		return true
-	}, 1, ReadOnlyMode)
+//	engine := datasource.MasterEngine()
 
-	// set an empty datamodels.Product if not found at all.
-	if !found {
-		product = datamodels.Product{}
-	}
+	
 
-	return
+	return datamodels.Product{},true
 }
 
 // SelectMany作用相同于Select但是它返回一个切片
 // 切片包含一个或多个实例
 // 如果传入的参数limit<=0则返回所有
-func (r *productMemoryRepository) SelectMany(query ProductQuery, limit int) (results []datamodels.Product) {
-	r.Exec(query, func(m datamodels.Product) bool {
-		results = append(results, m)
-		return true
-	}, limit, ReadOnlyMode)
+func (r *productMemoryRepository) SelectMany( page *models.Pagination) ([]*datamodels.Product, int64) {
+	engine := datasource.MasterEngine()
 
-	return
+	products := make([]*datamodels.Product, 0)
+	
+	s := engine.Limit(page.Limit, page.Offset)
+	if page.SortName != "" {
+		switch page.SortOrder {
+		case "asc":
+			s.Asc(page.SortName)
+		case "desc":
+			s.Desc(page.SortName)
+		}
+	}
+	count, _ := s.FindAndCount(&products)
+	return products, count
+
 }
 
 // InsertOrUpdate添加或者更新一个product实例到（内存）储存中。
@@ -118,7 +98,7 @@ func (r *productMemoryRepository) InsertOrUpdate(product datamodels.Product) (da
 		// 在实际使用时您可以使用第三方库去生成
 		// 一个string类型的UUID
 		r.mu.RLock()
-		for _, item := range r.source {
+		for _, item := range r.ds {
 			if item.ID > lastID {
 				lastID = item.ID
 			}
@@ -130,7 +110,7 @@ func (r *productMemoryRepository) InsertOrUpdate(product datamodels.Product) (da
 
 		// map-specific thing
 		r.mu.Lock()
-		r.source[id] = product
+		r.ds[id] = product
 		r.mu.Unlock()
 
 		return product, nil
@@ -139,7 +119,7 @@ func (r *productMemoryRepository) InsertOrUpdate(product datamodels.Product) (da
 	// 更新操作是基于product.ID的，
 	// 在例子中我们允许了对poster和genre的更新（如果它们非空）。
 	// 当然我们可以只是做单纯的数据替换操作:
-	// r.source[id] = product
+	// r.ds[id] = product
 	// 并注释掉下面的代码;
 	current, exists := r.Select(func(m datamodels.Product) bool {
 		return m.ID == id
@@ -151,15 +131,12 @@ func (r *productMemoryRepository) InsertOrUpdate(product datamodels.Product) (da
 
 	// map-specific thing
 	r.mu.Lock()
-	r.source[id] = current
+	r.ds[id] = current
 	r.mu.Unlock()
 
 	return product, nil
 }
 
 func (r *productMemoryRepository) Delete(query ProductQuery, limit int) bool {
-	return r.Exec(query, func(m datamodels.Product) bool {
-		delete(r.source, m.ID)
-		return true
-	}, limit, ReadWriteMode)
+	return true
 }

@@ -1,42 +1,108 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: joshua
+ * @Date: 2020-05-18 09:21:47
+ * @LastEditors: joshua
+ * @LastEditTime: 2020-05-26 17:47:59
+ */ 
 package datasource
 
 import (
-	_ "github.com/go-sql-driver/mysql" //不能忘记导入
+	"fmt"
+	"commons/config"
+	"sync"
+
 	"github.com/go-xorm/xorm"
+	"github.com/go-xorm/core"
+	"github.com/kataras/golog"
+	_ "github.com/go-sql-driver/mysql"
+
+)
+var (
+	masterEngine *xorm.Engine
+	slaveEngine  *xorm.Engine
+	lock         sync.Mutex
 )
 
-/**
- * 实例化数据库引擎方法：mysql的数据引擎
- */
-func NewMysqlEngine() *xorm.Engine {
-
-	//数据库引擎
-	engine, err := xorm.NewEngine("mysql", "root:123456@/iris?charset=utf8")
-
-	//根据实体创建表
-	//err = engine.CreateTables(new(model.Admin))
-
-	//同步数据库结构：主要负责对数据结构实体同步更新到数据库表
-	/**
-	 * 自动检测和创建表，这个检测是根据表的名字
-	 * 自动检测和新增表中的字段，这个检测是根据字段名，同时对表中多余的字段给出警告信息
-	 * 自动检测，创建和删除索引和唯一索引，这个检测是根据索引的一个或多个字段名，而不根据索引名称。因此这里需要注意，如果在一个有大量数据的表中引入新的索引，数据库可能需要一定的时间来建立索引。
-	 * 自动转换varchar字段类型到text字段类型，自动警告其它字段类型在模型和数据库之间不一致的情况。
-	 * 自动警告字段的默认值，是否为空信息在模型和数据库之间不匹配的情况
-	 */
-	//Sync2是Sync的基础上优化的方法
-	err = engine.Sync2(
-		new(model.Admin),
-	)
-
-	if err != nil {
-		panic(err.Error())
+// 主库，单例
+func MasterEngine() *xorm.Engine {
+	if masterEngine != nil {
+		return masterEngine
 	}
 
-	//设置显示sql语句
-	engine.ShowSQL(true)
-	engine.SetMaxOpenConns(10)
+	lock.Lock()
+	defer lock.Unlock()
 
+	if masterEngine != nil {
+		return masterEngine
+	}
+
+	master := config.DBConfig.Master
+	engine, err := xorm.NewEngine(master.Dialect, GetConnURL(&master))
+	if err != nil {
+		golog.Fatalf("@@@ Instance Master DB error!! %s", err)
+		return nil
+	}
+	configure(engine, &master)
+	engine.SetMapper(core.GonicMapper{})
+
+	masterEngine = engine
+	return masterEngine
+}
+
+// 从库，单例
+func SlaveEngine() *xorm.Engine {
+	if slaveEngine != nil {
+		return slaveEngine
+	}
+
+	lock.Lock()
+	defer lock.Unlock()
+
+	if slaveEngine != nil {
+		return slaveEngine
+	}
+
+	slave := config.DBConfig.Slave
+	engine, err := xorm.NewEngine(slave.Dialect, GetConnURL(&slave))
+	if err != nil {
+		golog.Fatalf("@@@ Instance Slave DB error!! %s", err)
+		return nil
+	}
+	configure(engine, &slave)
+
+	slaveEngine = engine
 	return engine
+}
 
+//
+func configure(engine *xorm.Engine, info *config.DBInfo) {
+	engine.ShowSQL(info.ShowSql)
+	engine.SetTZLocation(config.SysTimeLocation)
+	if info.MaxIdleConns > 0 {
+		engine.SetMaxIdleConns(info.MaxIdleConns)
+	}
+	if info.MaxOpenConns > 0 {
+		engine.SetMaxOpenConns(info.MaxOpenConns)
+	}
+
+	// 性能优化的时候才考虑，加上本机的SQL缓存
+	//cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 1000)
+	//engine.SetDefaultCacher(cacher)
+}
+
+// 获取数据库连接的url
+// true：master主库
+func GetConnURL(info *config.DBInfo) (url string) {
+	//db, err := gorm.Open("mysql", "user:password@/dbname?charset=utf8&parseTime=True&loc=Local")
+	url = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s",
+		info.User,
+		info.Password,
+		info.Host,
+		info.Port,
+		info.Database,
+		info.Charset)
+	//golog.Infof("@@@ DB conn==>> %s", url)
+	return
 }

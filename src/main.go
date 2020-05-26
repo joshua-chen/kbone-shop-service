@@ -4,8 +4,10 @@ import (
 	"commons/config"
 	"commons/middleware/cors"
 	"commons/middleware/jwt"
-	"commons/mvc"
-	_ "shop/controllers"
+	_ "commons/mvc"
+	rec "commons/mvc/recover"
+	"shop/routes"
+	_ "shop/routes"
 	_ "time"
 
 	_ "github.com/betacraft/yaag/irisyaag"
@@ -36,8 +38,8 @@ import (
 // @host
 // @basePath /api/shop/v1
 func main() {
-	mvc.RunApp()
-	return
+	//mvc.RunApp()
+	//return
 	app := newApp()
 
 	//应用App设置
@@ -88,7 +90,7 @@ func newApp() *iris.Application {
 	// and log the requests to the terminal.
 	app.Use(recover.New())
 	app.Use(logger.New())
-
+	app.Use(rec.CustomRecover)
 	/*sillyHTTPHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		println(r.RequestURI)
 	})
@@ -97,6 +99,8 @@ func newApp() *iris.Application {
 	*/
 	app.Use(cors.NewCors())     // cors
 	app.Use(jwt.GetJWT().Serve) // jwt
+
+	routes.InitRouter(app)
 
 	/*
 			//注册静态资源
@@ -141,7 +145,7 @@ func newApp() *iris.Application {
 /**
  * 项目设置
  */
-func configation(app *mvc.Application) {
+func configation(app *iris.Application) {
 
 	//配置 字符编码
 	app.Configure(iris.WithConfiguration(iris.YAML("./config/iris.yml")))

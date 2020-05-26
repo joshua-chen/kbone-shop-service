@@ -4,12 +4,12 @@
  * @Author: sueRimn
  * @Date: 2020-05-16 23:24:17
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-18 17:59:46
+ * @LastEditTime: 2020-05-26 18:14:22
  */
 package jwt
 
 import (
-	"commons/middleware/mvc/models"
+	"commons/mvc/models"
 	"fmt"
 	_ "log"
 	"time"
@@ -21,6 +21,7 @@ import (
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/context"
 	"github.com/spf13/cast"
+
 )
 
 const JwtKey = "kboneshop"

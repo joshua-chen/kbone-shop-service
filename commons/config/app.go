@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-18 09:21:47
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-22 14:13:06
+ * @LastEditTime: 2020-05-25 15:48:29
  */
 package config
 
@@ -13,6 +13,7 @@ import (
 
 	_ "github.com/kataras/golog"
 	_ "gopkg.in/yaml.v2"
+
 )
 
 var AppConfig AppInfo
