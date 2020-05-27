@@ -1,4 +1,4 @@
-module commons/mvc/recover
+module commons/middleware/recover
 
 go 1.14
 

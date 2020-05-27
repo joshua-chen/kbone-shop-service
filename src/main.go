@@ -3,15 +3,15 @@ package main
 import (
 	"commons/config"
 	"commons/middleware/cors"
-	"commons/middleware/jwt"
-	_ "commons/mvc"
-	rec "commons/mvc/recover"
+	"commons/mvc/context/response"
+	"commons/middleware"
+	recover_middleware "commons/middleware/recover"
 	"shop/routes"
 	_ "shop/routes"
 	_ "time"
 
-	_ "github.com/betacraft/yaag/irisyaag"
-	_ "github.com/betacraft/yaag/yaag"
+	"github.com/betacraft/yaag/irisyaag"
+	"github.com/betacraft/yaag/yaag"
 	"github.com/iris-contrib/swagger/v12"
 	"github.com/iris-contrib/swagger/v12/swaggerFiles"
 	"github.com/kataras/iris/v12"
@@ -41,13 +41,10 @@ func main() {
 	//mvc.RunApp()
 	//return
 	app := newApp()
-
+	routes.Register(app)
+	//route.GetToken(app)
 	//应用App设置
 	configation(app)
-
-	appConfig := config.AppConfig // config.GetAppConfig()
-	//addr := "localhost:" + config.Port
-
 	//
 	// swaggerUI // use ginSwagger middleware to
 	//
@@ -57,20 +54,18 @@ func main() {
 	// use swagger middleware to
 	app.Get("/swagger/{any:path}", swagger.CustomWrapHandler(swaggerConfig, swaggerFiles.Handler))
 
-	/*
-		// yaag api 为文档生成器
-		yaag.Init(&yaag.Config{
-			On:       true,
-			DocTitle: "Iris",
-			DocPath:  "apidoc.html",
-			BaseUrls: map[string]string{"Production": "", "Staging": ""},
-		})
-		app.Use(irisyaag.New())
-		////
+	// yaag api 为文档生成器
+	yaag.Init(&yaag.Config{
+		On:       true,
+		DocTitle: "Iris",
+		DocPath:  "apidoc.html",
+		BaseUrls: map[string]string{"Production": "", "Staging": ""},
+	})
+	app.Use(irisyaag.New())
+	////
 
-	*/
 	app.Run(
-		iris.Addr(":"+appConfig.Port),                 //在端口8080进行监听
+		iris.Addr(":"+config.AppConfig.Port),          //在端口8080进行监听
 		iris.WithoutServerError(iris.ErrServerClosed), //无服务错误提示
 		iris.WithOptimizations,                        //对json数据序列化更快的配置
 	)
@@ -90,7 +85,8 @@ func newApp() *iris.Application {
 	// and log the requests to the terminal.
 	app.Use(recover.New())
 	app.Use(logger.New())
-	app.Use(rec.CustomRecover)
+	app.Use(recover_middleware.CustomRecover)
+	app.Use(middleware.ServeHTTP)
 	/*sillyHTTPHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		println(r.RequestURI)
 	})
@@ -98,9 +94,6 @@ func newApp() *iris.Application {
 	app.Use(sillyConvertedToIon)
 	*/
 	app.Use(cors.NewCors())     // cors
-	app.Use(jwt.GetJWT().Serve) // jwt
-
-	routes.InitRouter(app)
 
 	/*
 			//注册静态资源
@@ -153,18 +146,10 @@ func configation(app *iris.Application) {
 	//错误配置
 	//未发现错误
 	app.OnErrorCode(iris.StatusNotFound, func(context context.Context) {
-		context.JSON(iris.Map{
-			"errmsg": iris.StatusNotFound,
-			"msg":    " not found ",
-			"data":   iris.Map{},
-		})
+		context.JSON(response.NewNotFoundResult())
 	})
 
 	app.OnErrorCode(iris.StatusInternalServerError, func(context context.Context) {
-		context.JSON(iris.Map{
-			"errmsg": iris.StatusInternalServerError,
-			"msg":    " interal error ",
-			"data":   iris.Map{},
-		})
+		context.JSON(response.NewErrorResult(iris.StatusInternalServerError))
 	})
 }

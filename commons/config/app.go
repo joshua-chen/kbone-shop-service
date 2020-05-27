@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-18 09:21:47
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-25 15:48:29
+ * @LastEditTime: 2020-05-27 17:58:29
  */
 package config
 
@@ -20,8 +20,17 @@ var AppConfig AppInfo
 
 type AppInfo struct {
 	Port       string   `yaml:"port"`
-	IgnoreURLs []string `yaml:"ignoreUrls"`
-	JWTTimeout int64    `yaml:"jwtTimeout"`
+	AnonymousUrls []string `yaml:"anonymousUrls"`
+	AnonymousRequset AnonymousRequset `yaml:"anonymousRequset"`
+	StaticPath  string   `yaml:"staticPath"`
+	JwtTimeout int64    `yaml:"jwtTimeout"`
 	LogLevel   string   `yaml:"logLevel"`
 	Secret     string   `yaml:"secret"`
+}
+
+type AnonymousRequset struct{
+	Urls []string `yaml:"urls"`
+	Prefixes []string `yaml:"prefixes"`
+	Suffixes []string `yaml:"suffixes"`
+	
 }

@@ -4,19 +4,20 @@
  * @Author: joshua
  * @Date: 2020-05-18 14:54:08
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-26 18:07:47
+ * @LastEditTime: 2020-05-27 12:14:20
  */ 
 package services
 
 import (
 	"shop/datamodels"
 	"shop/repositories"
-	"commons/mvc/models"
+	_ "commons/mvc/models"
+	"commons/mvc/context/request"
 
 )
 
 type ProductService interface {
-	GetAll(page *models.Pagination) ([]*datamodels.Product ,int64)
+	GetAll(page *request.Pagination) ([]*datamodels.Product ,int64)
 	GetByID(id int64) (datamodels.Product, bool)
 	DeleteByID(id int64) bool
 }
@@ -33,7 +34,7 @@ type productService struct {
 }
 
 // GetAll 返回所有的 products.
-func (s *productService) GetAll( page *models.Pagination) ([]*datamodels.Product ,int64){
+func (s *productService) GetAll( page *request.Pagination) ([]*datamodels.Product ,int64){
 	
 	return s.repo.SelectMany(page)
 }

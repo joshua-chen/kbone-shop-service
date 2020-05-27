@@ -4,17 +4,18 @@
  * @Author: joshua
  * @Date: 2020-05-17 00:11:14
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-18 15:45:06
+ * @LastEditTime: 2020-05-27 16:46:20
  */
 package datamodels
 
 import (
-	"commons/middleware/jwt"
+	_"commons/middleware/jwt"
+	"commons/middleware/models"
 
 )
 
 type User struct {
-	jwt.User
+	models.User
 	Name   string //姓名
 	Email  string //邮箱
 	Mobile string //手机

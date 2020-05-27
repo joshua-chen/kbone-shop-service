@@ -4,8 +4,10 @@ import (
 	"errors"
 	"sync"
 	"commons/datasource"
-	"commons/mvc/models"
+	"commons/mvc/context/request"
 	"shop/datamodels"
+
+	"github.com/kataras/golog"
 
 )
 
@@ -18,7 +20,7 @@ type ProductQuery func(datamodels.Product) bool
 type ProductRepository interface {
 
 	Select(query ProductQuery) (product datamodels.Product, found bool)
-	SelectMany( page *models.Pagination) ([]*datamodels.Product, int64) 
+	SelectMany( page *request.Pagination) ([]*datamodels.Product, int64) 
 	InsertOrUpdate(product datamodels.Product) (updatedProduct datamodels.Product, err error)
 	Delete(query ProductQuery, limit int) (deleted bool)
 }
@@ -67,9 +69,10 @@ func (r *productMemoryRepository) Select(query ProductQuery) (product datamodels
 // SelectMany作用相同于Select但是它返回一个切片
 // 切片包含一个或多个实例
 // 如果传入的参数limit<=0则返回所有
-func (r *productMemoryRepository) SelectMany( page *models.Pagination) ([]*datamodels.Product, int64) {
+func (r *productMemoryRepository) SelectMany( page *request.Pagination) ([]*datamodels.Product, int64) {
 	engine := datasource.MasterEngine()
 
+	golog.Debugf("engine ")	
 	products := make([]*datamodels.Product, 0)
 	
 	s := engine.Limit(page.Limit, page.Offset)

@@ -5,23 +5,28 @@ go 1.14
 require (
 	commons/config v0.0.0
 	commons/datasource v0.0.0-00010101000000-000000000000 // indirect
+	commons/middleware v0.0.0-00010101000000-000000000000
 	commons/middleware/cors v0.0.0-00010101000000-000000000000
-	commons/middleware/jwt v0.0.0-00010101000000-000000000000
+	commons/middleware/jwt v0.0.0-00010101000000-000000000000 // indirect
 	commons/middleware/jwt/route v0.0.0-00010101000000-000000000000 // indirect
-	commons/mvc v0.0.0-00010101000000-000000000000
+	commons/middleware/models v0.0.0-00010101000000-000000000000 // indirect
+	commons/middleware/recover v0.0.0-00010101000000-000000000000
+	commons/mvc v0.0.0-00010101000000-000000000000 // indirect
+	commons/mvc/context/request v0.0.0-00010101000000-000000000000 // indirect
+	commons/mvc/context/response v0.0.0-00010101000000-000000000000
+	commons/mvc/context/response/msg v0.0.0-00010101000000-000000000000 // indirect
 	commons/mvc/models v0.0.0-00010101000000-000000000000 // indirect
-	commons/mvc/recover v0.0.0-00010101000000-000000000000
-	commons/mvc/response v0.0.0-00010101000000-000000000000 // indirect
+	commons/utils v0.0.0-00010101000000-000000000000 // indirect
 	commons/utils/yaml v0.0.0-00010101000000-000000000000 // indirect
 	github.com/betacraft/yaag v1.0.0
+	github.com/casbin/casbin v1.9.1 // indirect
 	github.com/go-openapi/spec v0.19.8 // indirect
 	github.com/go-openapi/swag v0.19.9 // indirect
 	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/go-xorm/core v0.6.3 // indirect
 	github.com/go-xorm/xorm v0.7.9 // indirect
-	github.com/gorilla/schema v1.1.0 // indirect
-	github.com/iris-contrib/formBinder v5.0.0+incompatible // indirect
 	github.com/iris-contrib/swagger/v12 v12.0.1
+	github.com/jmespath/go-jmespath v0.3.0 // indirect
 	github.com/kataras/iris/v12 v12.1.8
 	github.com/klauspost/compress v1.10.5 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
@@ -39,17 +44,27 @@ replace commons/config => ../commons/config
 
 replace commons/datasource => ../commons/datasource
 
+replace commons/utils => ../commons/utils
+
 replace commons/utils/yaml => ../commons/utils/yaml
 
 replace commons/mvc/models => ../commons/mvc/models
 
-replace commons/mvc/recover => ../commons/mvc/recover
+replace commons/mvc/context/response => ../commons/mvc/context/response
 
-replace commons/mvc/response => ../commons/mvc/response
+replace commons/mvc/context/response/msg => ../commons/mvc/context/response/msg
+
+replace commons/mvc/context/request => ../commons/mvc/context/request
 
 replace commons/mvc => ../commons/mvc
 
+replace commons/middleware => ../commons/middleware
+
+replace commons/middleware/models => ../commons/middleware/models
+
 replace commons/middleware/jwt => ../commons/middleware/jwt
+
+replace commons/middleware/recover => ../commons/middleware/recover
 
 replace commons/middleware/jwt/route => ../commons/middleware/jwt/route
 

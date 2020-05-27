@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-25 17:50:05
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-26 18:16:01
+ * @LastEditTime: 2020-05-27 17:45:37
  */
 
 /**
@@ -16,10 +16,10 @@
 package recover
 
 import (
-	"commons/mvc/models"
+	"commons/mvc/context/response"
 	"fmt"
 	"runtime"
-	"strconv"
+	_ "strconv"
 
 	_ "github.com/kataras/golog"
 	"github.com/kataras/iris/v12"
@@ -49,15 +49,11 @@ func CustomRecover(ctx iris.Context) {
 			// 打印错误日志
 			ctx.Application().Logger().Warn(logMessage)
 			// 返回错误信息
-			result := &models.ResponseResult{
-				Msg:     errMsg,
-				Success: false,
-				Code:    strconv.Itoa(iris.StatusInternalServerError),
-			}
+			result := response.NewErrorResult(iris.StatusInternalServerError, errMsg)
 			ctx.JSON(result)
-			ctx.StatusCode(iris.StatusInternalServerError)
 			ctx.StopExecution()
 		}
 	}()
+	
 	ctx.Next()
 }

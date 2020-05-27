@@ -4,9 +4,9 @@
  * @Author: joshua
  * @Date: 2020-05-25 16:38:18
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-26 18:24:56
+ * @LastEditTime: 2020-05-27 12:12:09
  */ 
-package models
+package request
 
 import (
 	"errors"
