@@ -9,7 +9,7 @@
 package main
 
 import (
-	"commons/application"
+	"commons/mvc/application"
 	_ "commons/config"
 	_ "commons/middleware"
 	_ "commons/middleware/cors"
