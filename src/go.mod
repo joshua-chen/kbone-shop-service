@@ -3,6 +3,7 @@ module shop
 go 1.14
 
 require (
+	commons/application v0.0.0-00010101000000-000000000000
 	commons/config v0.0.0
 	commons/datasource v0.0.0-00010101000000-000000000000 // indirect
 	commons/middleware v0.0.0-00010101000000-000000000000
@@ -39,6 +40,8 @@ require (
 	shop/routes v0.0.0
 	shop/services v0.0.0 // indirect
 )
+
+replace commons/application => ../commons/application
 
 replace commons/config => ../commons/config
 

@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-16 23:39:39
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-27 16:58:50
+ * @LastEditTime: 2020-05-27 18:26:24
  */
 
 package routes
@@ -16,7 +16,7 @@ import (
 	_ "commons/mvc/context/response"
 	_ "fmt"
 	_ "net/http"
-	"shop/repositories"
+	_"shop/repositories"
 	"shop/services"
 	_ "strings"
 
@@ -57,8 +57,7 @@ func Register(app *iris.Application) {
 */
 func registerProducts(router iris.Party) {
 	deps := hero.New()
-	repo := repositories.NewProductRepository()
-	productService := services.NewProductService(repo)
+	productService := services.NewProductService()
 	deps.Register(productService)
 	
 	// GET: /api/v1/products

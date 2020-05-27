@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-18 14:54:08
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-27 12:14:20
+ * @LastEditTime: 2020-05-27 18:25:55
  */ 
 package services
 
@@ -23,9 +23,9 @@ type ProductService interface {
 }
 
 // NewProductService 返回默认的 product 服务层.
-func NewProductService(repo repositories.ProductRepository) ProductService {
+func NewProductService() ProductService {
 	return &productService{
-		repo: repo,
+		repo: repositories.NewProductRepository(),
 	}
 }
 
