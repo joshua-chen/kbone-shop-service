@@ -1,11 +1,3 @@
-/*
- * @Descripttion: 
- * @version: 
- * @Author: joshua
- * @Date: 2020-05-27 15:43:36
- * @LastEditors: joshua
- * @LastEditTime: 2020-05-27 15:53:52
- */ 
 package models
 
 import (
@@ -17,12 +9,17 @@ import (
 type CasbinRule struct {
 	Id    int64  `xorm:"pk autoincr INT(10) notnull" json:"id" form:"id"`
 	PType string `xorm:"varchar(100) index" json:"p_type"`
-	V0    string `xorm:"varchar(100) index" json:"v0"`
-	V1    string `xorm:"varchar(100) index" json:"v1"`
-	V2    string `xorm:"varchar(100) index" json:"v2"`
-	V3    string `xorm:"varchar(100) index" json:"v3"`
-	V4    string `xorm:"varchar(100) index" json:"v4"`
-	V5    string `xorm:"varchar(100) index" json:"v5"`
+	Sub    string `xorm:"varchar(100) index" json:"sub"`
+	Obj    string `xorm:"varchar(100) index" json:"obj"`
+	Act    string `xorm:"varchar(100) index" json:"act"`
+	Ext    string `xorm:"varchar(100) index" json:"ex"`
+	Name    string `xorm:"varchar(100) index" json:"name"`
+	Des    string `xorm:"varchar(100) index" json:"des"`
+	CreateTime   string `xorm:"datetime" json:"create_time"`
+}
+//{"admin", "/admin*", "GET|POST|DELETE|PUT", ".*", "角色管理"},
+func(m *CasbinRule) TableName() string {
+	return "sys_casbin_rule"
 }
 
 func GetPaginationRoles(page *request.Pagination) ([]*CasbinRule, int64, error) {

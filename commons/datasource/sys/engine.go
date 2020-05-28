@@ -1,0 +1,36 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: joshua
+ * @Date: 2020-05-18 09:21:47
+ * @LastEditors: joshua
+ * @LastEditTime: 2020-05-28 16:39:01
+ */
+package sys
+
+import (
+	"commons/datasource"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/go-xorm/core"
+	"github.com/go-xorm/xorm"
+
+)
+
+// 主库，单例
+func MasterEngine() *xorm.Engine {
+
+	engine := datasource.MasterEngine()
+	tbMapper := core.NewPrefixMapper(core.GonicMapper{}, "sys_")
+	engine.SetTableMapper(tbMapper)
+	return engine
+}
+
+// 从库，单例
+func SlaveEngine() *xorm.Engine {
+	engine := datasource.SlaveEngine()
+	tbMapper := core.NewPrefixMapper(core.GonicMapper{}, "sys_")
+	engine.SetTableMapper(tbMapper)
+	return engine
+}
+ 

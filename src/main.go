@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-18 14:51:03
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-27 18:42:44
+ * @LastEditTime: 2020-05-28 20:52:00
  */
 package main
 
@@ -42,7 +42,7 @@ import (
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
 // @host
-// @basePath /api/shop/v1
+// @basePath /api/v1
 func main() {	
 	application.Run(func(app *iris.Application) {
 		routes.Register(app)

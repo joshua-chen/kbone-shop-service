@@ -1,7 +1,16 @@
-package casbins
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: joshua
+ * @Date: 2020-05-27 14:42:52
+ * @LastEditors: joshua
+ * @LastEditTime: 2020-05-28 11:04:21
+ */ 
+package casbin
 
 import (
 	"github.com/kataras/golog"
+
 )
 
 /**

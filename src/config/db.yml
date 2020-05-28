@@ -2,10 +2,10 @@
 master:
   dialect: mysql
   user: root
-  password:
+  password: 123456
   host: 127.0.0.1
   port: 3306
-  database: casbin
+  database: shop
   charset: utf8
   showSql: true
   logLevel: debug
@@ -14,10 +14,10 @@ master:
 slave:
   dialect: mysql
   user: root
-  password:
+  password: 123456
   host: 127.0.0.1
   port: 3306
-  database: casbin
+  database: shop
   charset: utf8
   showSql: true
   logLevel: debug

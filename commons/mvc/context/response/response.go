@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-25 17:37:30
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-27 17:14:58
+ * @LastEditTime: 2020-05-28 20:34:29
  */
 
 package response
@@ -21,12 +21,28 @@ import (
 
 )
 
-func ToResult(data interface{}) Result {
+func DefaultResult(data interface{}) Result {
 
 	//var result = new(models.ResponseResult)
 	//result := models.NewResponseResult(data, "200")
 	return NewResult(data, 200)
 	//return result
+}
+func BoolResult(data bool) Result {
+
+	//var result = new(models.ResponseResult)
+	//result := models.NewResponseResult(data, "200")
+	return NewBoolResult(data, 200)
+	//return result
+}
+func NewBoolResult(data bool, c int, m ...string) Result {
+	r := Result{Data: iris.Map{}, Code: c, Success: true}
+
+ 	if len(m) > 0 {
+		r.Msg = m[0]
+	}
+
+	return r
 }
 func NewResult(data interface{}, c int, m ...string) Result {
 	r := Result{Data: data, Code: c, Success: false}
@@ -75,6 +91,7 @@ func NewErrorResult(code int, msg ...string) Result {
 	}
 	return result
 }
+
 func Fail(ctx iris.Context, statusCode int, format string, a ...interface{}) {
 	err := HttpError{
 		Code:   statusCode,

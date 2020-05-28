@@ -1,12 +1,12 @@
-package casbins
+package casbin
 
 import (
-	"fmt"
 	"commons/config"
+	"commons/datasource"
 	"commons/middleware/jwt"
 	"commons/mvc/context/response"
 	"commons/mvc/context/response/msg"
-	"commons/datasource"
+	"fmt"
 	"net/http"
 	"strconv"
 	"sync"
@@ -19,14 +19,37 @@ import (
 )
 
 var (
-	adt *Adapter // Your driver and data source.
-	e   *casbin.Enforcer
+	adapter *Adapter // Your driver and data source.
+	enforcer   *casbin.Enforcer
 
-	adtLook sync.Mutex
-	eLook sync.Mutex
+	adapterLook sync.Mutex
+	enforcerLook   sync.Mutex
 
 	rbacModel string
 )
+
+type Casbin struct {
+}
+
+var (
+	instance *Casbin
+	lock     *sync.Mutex = &sync.Mutex{}
+)
+
+func Instance() *Casbin {
+	if instance == nil {
+		lock.Lock()
+		defer lock.Unlock()
+		if instance == nil {
+			instance = &Casbin{}
+		}
+	}
+	return instance
+}
+func (a *Casbin) Filter(ctx context.Context) bool {
+
+	return Filter(ctx)
+}
 
 // Casbin is the casbins services which contains the casbins enforcer.
 //type Casbin struct {
@@ -38,7 +61,7 @@ var (
 // Adapt with its `Wrapper` for the entire application
 // or its `ServeHTTP` for specific routes or parties.
 //func New() *Casbin {
-//	return &Casbin{Enforcer: e}
+//	return &Casbin{Enforcer: enforcer}
 //}
 
 func SetRbacModel(rootID string) {
@@ -60,17 +83,17 @@ m = g(r.sub, p.sub) && keyMatch(r.obj, p.obj) && regexMatch(r.suf, p.suf) && reg
 `, rootID)
 }
 
-// 获取Enforcer
+// 
 func GetEnforcer() *casbin.Enforcer {
-	if e != nil {
-		e.LoadPolicy()
-		return e
+	if enforcer != nil {
+		enforcer.LoadPolicy()
+		return enforcer
 	}
-	eLook.Lock()
-	defer eLook.Unlock()
-	if e != nil {
-		e.LoadPolicy()
-		return e
+	enforcerLook.Lock()
+	defer enforcerLook.Unlock()
+	if enforcer != nil {
+		enforcer.LoadPolicy()
+		return enforcer
 	}
 
 	m := casbin.NewModel(rbacModel)
@@ -85,20 +108,20 @@ func GetEnforcer() *casbin.Enforcer {
 	// If it doesn't exist, the adapter will create it automatically.
 	// a := xormadapter.NewAdapter("mysql", "mysql_username:mysql_password@tcp(127.0.0.1:3306)/abc", true)
 	// TODO use go-bindata fill
-	//e = casbin.NewEnforcer("conf/rbac_model.conf", singletonAdapter())
-	e = casbin.NewEnforcer(m, singleAdapter())
-	e.EnableLog(true)
-	return e
+	//enforcer = casbin.NewEnforcer("conf/rbac_model.conf", singleAdapter())
+	enforcer = casbin.NewEnforcer(m, singleAdapter())
+	enforcer.EnableLog(true)
+	return enforcer
 }
 
 func singleAdapter() *Adapter {
-	if adt != nil {
-		return adt
+	if adapter != nil {
+		return adapter
 	}
-	adtLook.Lock()
-	defer adtLook.Unlock()
-	if adt != nil {
-		return adt
+	adapterLook.Lock()
+	defer adapterLook.Unlock()
+	if adapter != nil {
+		return adapter
 	}
 
 	master := config.DBConfig.Master
@@ -107,22 +130,23 @@ func singleAdapter() *Adapter {
 	// The adapter will use the MySQL database named "casbins".
 	// If it doesn't exist, the adapter will create it automatically.
 	// a := xormadapter.NewAdapter("mysql", "root:root@tcp(127.0.0.1:3306)/?charset=utf8&parseTime=True&loc=Local") // Your driver and data source.
-	adt = NewAdapter(master.Dialect, url, true) // Your driver and data source.
-	return adt
+	adapter = NewAdapter(master.Dialect, url, true) // Your driver and data source.
+	return adapter
 }
 
+// casbin????
 // ServeHTTP is the iris compatible casbins handler which should be passed to specific routes or parties.
 // Usage:
 // [...]
 // app.Get("/dataset1/resource1", casbinMiddleware.ServeHTTP, myHandler)
 // [...]
-func CheckPermissions(ctx context.Context) bool {
+func Filter(ctx context.Context) bool {
 	user, ok := jwt.ParseToken(ctx)
 	if !ok {
 		return false
 	}
 
-	uid := strconv.Itoa(int(user.ID))
+	uid := strconv.Itoa(int(user.Id))
 	yes := GetEnforcer().Enforce(uid, ctx.Path(), ctx.Method(), ".*")
 	if !yes {
 		response.Unauthorized(ctx, msg.PermissionsLess, nil)

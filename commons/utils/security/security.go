@@ -4,12 +4,12 @@
  * @Author: joshua
  * @Date: 2020-05-25 16:24:14
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-25 16:28:45
+ * @LastEditTime: 2020-05-28 15:13:51
  */ 
 package security
 
 import (
-	"crypto/aes"
+	_"crypto/aes"
 	"crypto/md5"
 	"encoding/hex"
 	"errors"
@@ -29,7 +29,7 @@ func Md5(b []byte) string {
 // AES-128, AES-192, or AES-256.
 
 
-func padData(d []byte, bs int) []byte {
+func PadData(d []byte, bs int) []byte {
 	padedSize := ((len(d) / bs) + 1) * bs
 	pad := padedSize - len(d)
 	for i := len(d); i < padedSize; i++ {
@@ -38,7 +38,7 @@ func padData(d []byte, bs int) []byte {
 	return d
 }
 
-func removePad(r []byte) ([]byte, error) {
+func RemovePad(r []byte) ([]byte, error) {
 	l := len(r)
 	if l == 0 {
 		return []byte{}, errors.New("input []byte is empty")

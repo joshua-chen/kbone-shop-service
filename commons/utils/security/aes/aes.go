@@ -4,13 +4,15 @@
  * @Author: joshua
  * @Date: 2020-05-25 16:24:14
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-25 16:31:14
+ * @LastEditTime: 2020-05-28 15:16:08
  */
-package utils
+package aes
 
 import (
 	"bytes"
 	aesutil "crypto/aes"
+	"encoding/hex"
+	"commons/utils/security"
 	"crypto/cipher"
 	"encoding/base64"
 	"fmt"
@@ -68,7 +70,7 @@ func AESDecrypt2(cipherkey, ciphertext []byte) ([]byte, error) {
 		src = src[bs:]
 		dst = dst[bs:]
 	}
-	return removePad(r)
+	return security.RemovePad(r)
 }
 
 // 补码
@@ -107,7 +109,7 @@ func AESEncrypt2(cipherkey, src []byte) []byte {
 		panic(err)
 	}
 	bs := block.BlockSize()
-	src = padData(src, bs)
+	src = security.PadData(src, bs)
 	r := make([]byte, len(src))
 	dst := r
 	for len(src) > 0 {

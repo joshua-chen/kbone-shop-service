@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-18 09:21:47
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-27 17:58:29
+ * @LastEditTime: 2020-05-28 20:59:08
  */
 package config
 
@@ -26,6 +26,7 @@ type AppInfo struct {
 	JwtTimeout int64    `yaml:"jwtTimeout"`
 	LogLevel   string   `yaml:"logLevel"`
 	Secret     string   `yaml:"secret"`
+	ApiPrefix  string   `yaml:"apiPrefix"`
 }
 
 type AnonymousRequset struct{

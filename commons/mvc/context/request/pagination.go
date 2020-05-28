@@ -4,12 +4,12 @@
  * @Author: joshua
  * @Date: 2020-05-25 16:38:18
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-27 12:12:09
+ * @LastEditTime: 2020-05-28 11:35:19
  */ 
 package request
 
 import (
-	"errors"
+	_"errors"
 
 	"github.com/kataras/iris/v12"
 
@@ -34,37 +34,35 @@ type Pagination struct {
 	ID int64 // 公用的特殊参数
 }
 
-func NewPagination(ctx iris.Context) (*Pagination, error) {
-	pageNum, err1 := ctx.URLParamInt("pageNum")
-	pageSize, err2 := ctx.URLParamInt("pageSize")
+func NewPagination(ctx iris.Context) (*Pagination) {
+	pageNum := ctx.URLParamIntDefault("pageNum",-1)
+	pageSize:= ctx.URLParamIntDefault("pageSize",-1)
 	offset := ctx.URLParamIntDefault("offset",-1)
 	limit := ctx.URLParamIntDefault("limit",-1)
-	sortName := ctx.URLParam("sortName")
-	sortOrder := ctx.URLParam("sortOrder")
+	sortName := ctx.URLParamDefault("sortName","-1")
+	sortOrder := ctx.URLParamDefault("sortOrder","-1")
 	
-	if err1 != nil || err2 != nil  {
-		return nil, errors.New("请求的分页参数解析错误.")
-	}
+	 
 	var page Pagination
-	if(offset != -1 && limit!= -1){
+	if(offset != -1 && limit != -1){
 		page = Pagination{
 			SortName:   sortName,
 			SortOrder:  sortOrder,
 			Limit: limit,
 			Offset: offset,
 		}
-	}else{
-		page = Pagination{
-			PageNum: pageNum,
-			PageSize: pageSize,
-			SortName:   sortName,
-			SortOrder:  sortOrder,
-		}
-		page.set()
+		return &page
 	}
 	
+	page = Pagination{
+		PageNum: pageNum,
+		PageSize: pageSize,
+		SortName:   sortName,
+		SortOrder:  sortOrder,
+	}
+	page.set()
 	
-	return &page, nil
+	return &page
 }
 
 // 设置分页参数

@@ -7,3 +7,4 @@ anonymousRequset:
     prefixes: [/api/v1/, /swagger]
     suffixes: [_doc.html]
 staticPath: /static
+apiPrefix: /api/v1/

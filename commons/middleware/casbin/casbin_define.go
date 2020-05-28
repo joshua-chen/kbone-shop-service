@@ -6,7 +6,7 @@
  * @LastEditors: joshua
  * @LastEditTime: 2020-05-27 15:39:44
  */ 
-package casbins
+package casbin
 
 // 前端请求的结构体
 type (

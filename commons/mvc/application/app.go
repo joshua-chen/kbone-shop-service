@@ -2,35 +2,35 @@ package application
 
 import (
 	"commons/config"
-	"commons/middleware/cors"
-	"commons/mvc/context/response"
 	"commons/middleware"
-	recover_middleware "commons/middleware/recover"
+	_"commons/middleware/auth"
+	_"commons/middleware/cors"
+	_"commons/middleware/recover"
+	"commons/mvc/context/response"
 	_ "time"
 
 	"github.com/betacraft/yaag/irisyaag"
 	"github.com/betacraft/yaag/yaag"
-	_"github.com/iris-contrib/swagger/v12"
-	_"github.com/iris-contrib/swagger/v12/swaggerFiles"
+	_ "github.com/iris-contrib/swagger/v12"
+	_ "github.com/iris-contrib/swagger/v12/swaggerFiles"
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/context"
 	"github.com/kataras/iris/v12/middleware/logger"
-	"github.com/kataras/iris/v12/middleware/recover"
+	recover_middleware "github.com/kataras/iris/v12/middleware/recover"
 	_ "github.com/kataras/iris/v12/mvc"
 	_ "github.com/kataras/iris/v12/sessions"
- )
+)
 
- 
+
 func Run(appFunc func(app *iris.Application)) {
 	//mvc.RunApp()
 	//return
-	app := newApp()	
+	app := newApp()
 	//route.GetToken(app)
 	//应用App设置
 	configation(app)
 
 	appFunc(app)
-	 
 
 	// yaag api 为文档生成器
 	yaag.Init(&yaag.Config{
@@ -46,7 +46,6 @@ func Run(appFunc func(app *iris.Application)) {
 		iris.WithoutServerError(iris.ErrServerClosed), //无服务错误提示
 		iris.WithOptimizations,                        //对json数据序列化更快的配置
 	)
-	//app.Run(iris.Addr(":8080"), iris.WithConfiguration(iris.YAML("./configs/iris.yml")))
 
 }
 
@@ -60,23 +59,21 @@ func newApp() *iris.Application {
 	// Optionally, add two built'n handlers
 	// that can recover from any http-relative panics
 	// and log the requests to the terminal.
-	app.Use(recover.New())
+	app.Use(recover_middleware.New())
 	app.Use(logger.New())
-	app.Use(recover_middleware.CustomRecover)
-	app.Use(middleware.ServeHTTP)
+	app.Use(middleware.Instance().Recover.New())
+	app.Use(middleware.Instance().Auth.New())
+	app.Use(middleware.Instance().Cors.New()) // cors
 	/*sillyHTTPHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		println(r.RequestURI)
 	})
 	sillyConvertedToIon := iris.FromStd(sillyHTTPHandler)
 	app.Use(sillyConvertedToIon)
 	*/
-	app.Use(cors.NewCors())     // cors
+	
 
 	/*
-			//注册静态资源
-			app.HandleDir("/static", "./static")
-			app.HandleDir("/manage/static", "./static")
-			app.HandleDir("/img", "./static/img")
+			
 
 			//注册视图文件
 			app.RegisterView(iris.HTML("./static", ".html"))
@@ -112,6 +109,12 @@ func newApp() *iris.Application {
 	return app
 }
 
+func handleStatic(app *iris.Application){
+	//注册静态资源
+	app.HandleDir("/static", "./static")
+	app.HandleDir("/manage/static", "./static")
+	app.HandleDir("/img", "./static/img")
+}
 /**
  * 项目设置
  */

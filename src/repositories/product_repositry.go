@@ -28,14 +28,13 @@ type ProductRepository interface {
 // NewProductRepository返回一个新的基于内存的product库。
 // 库的类型在我们的例子中是唯一的。
 func NewProductRepository() ProductRepository {
-	return &productMemoryRepository{}
+	return &productRepository{}
 }
  
 
 // productMemoryRepository就是一个"ProductRepository"
 // 它负责存储于内存中的实例数据(map)
-type productMemoryRepository struct {
-	ds map[int64]datamodels.Product
+type productRepository struct {
 	mu     sync.RWMutex
 }
 
@@ -58,7 +57,7 @@ const (
 // 这是一个很简单但很聪明的雏形方法
 // 我基本在所有会用到的地方使用自从我想到了它
 // 也希望你们觉得好用
-func (r *productMemoryRepository) Select(query ProductQuery) (product datamodels.Product, found bool) {
+func (r *productRepository) Select(query ProductQuery) (product datamodels.Product, found bool) {
 //	engine := datasource.MasterEngine()
 
 	
@@ -69,7 +68,7 @@ func (r *productMemoryRepository) Select(query ProductQuery) (product datamodels
 // SelectMany作用相同于Select但是它返回一个切片
 // 切片包含一个或多个实例
 // 如果传入的参数limit<=0则返回所有
-func (r *productMemoryRepository) SelectMany( page *request.Pagination) ([]*datamodels.Product, int64) {
+func (r *productRepository) SelectMany( page *request.Pagination) ([]*datamodels.Product, int64) {
 	engine := datasource.MasterEngine()
 
 	golog.Debugf("engine ")	
@@ -92,7 +91,7 @@ func (r *productMemoryRepository) SelectMany( page *request.Pagination) ([]*data
 // InsertOrUpdate添加或者更新一个product实例到（内存）储存中。
 //
 // 返回最新操作成功的实例或抛出错误。
-func (r *productMemoryRepository) InsertOrUpdate(product datamodels.Product) (datamodels.Product, error) {
+func (r *productRepository) InsertOrUpdate(product datamodels.Product) (datamodels.Product, error) {
 	id := product.ID
 
 	if id == 0 { // 创建一个新的操作
@@ -101,11 +100,9 @@ func (r *productMemoryRepository) InsertOrUpdate(product datamodels.Product) (da
 		// 在实际使用时您可以使用第三方库去生成
 		// 一个string类型的UUID
 		r.mu.RLock()
-		for _, item := range r.ds {
-			if item.ID > lastID {
-				lastID = item.ID
-			}
-		}
+		
+		//数据库操作
+
 		r.mu.RUnlock()
 
 		id = lastID + 1
@@ -113,7 +110,7 @@ func (r *productMemoryRepository) InsertOrUpdate(product datamodels.Product) (da
 
 		// map-specific thing
 		r.mu.Lock()
-		r.ds[id] = product
+	//	r.ds[id] = product
 		r.mu.Unlock()
 
 		return product, nil
@@ -124,7 +121,7 @@ func (r *productMemoryRepository) InsertOrUpdate(product datamodels.Product) (da
 	// 当然我们可以只是做单纯的数据替换操作:
 	// r.ds[id] = product
 	// 并注释掉下面的代码;
-	current, exists := r.Select(func(m datamodels.Product) bool {
+	_, exists := r.Select(func(m datamodels.Product) bool {
 		return m.ID == id
 	})
 
@@ -134,12 +131,12 @@ func (r *productMemoryRepository) InsertOrUpdate(product datamodels.Product) (da
 
 	// map-specific thing
 	r.mu.Lock()
-	r.ds[id] = current
+//	r.ds[id] = current
 	r.mu.Unlock()
 
 	return product, nil
 }
 
-func (r *productMemoryRepository) Delete(query ProductQuery, limit int) bool {
+func (r *productRepository) Delete(query ProductQuery, limit int) bool {
 	return true
 }

@@ -4,7 +4,7 @@
  * @Author: sueRimn
  * @Date: 2020-05-16 23:24:17
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-27 17:26:39
+ * @LastEditTime: 2020-05-28 15:27:14
  */
 package jwt
 
@@ -22,11 +22,11 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 	_ "github.com/dgrijalva/jwt-go/request"
 	_ "github.com/iris-contrib/middleware/cors"
-	_  "github.com/iris-contrib/middleware/jwt"
+	_ "github.com/iris-contrib/middleware/jwt"
 	"github.com/kataras/golog"
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/context"
-	_"github.com/spf13/cast"
+	_ "github.com/spf13/cast"
 
 )
 
@@ -42,28 +42,31 @@ type (
 	TokenExtractor func(context.Context) (string, error)
 
 	// Middleware the middleware for JSON Web tokens authentication method
-	JwtInfo struct {
+	JWT struct {
 		Config Config
 	}
 )
 
 var (
-	_jwt *JwtInfo
-	lock sync.Mutex
+	instance *JWT
+	lock     *sync.Mutex = &sync.Mutex{}
 )
 
+func Instance() *JWT {
+	if instance == nil {
+		lock.Lock()
+		defer lock.Unlock()
+		if instance == nil {
+			instance = &JWT{}
+		}
+	}
+	return instance
+}
+
 // jwt中间件配置
-func Configure() *JwtInfo {
-	if _jwt != nil {
-		return _jwt
-	}
+func Configure() *JWT {
 
-	lock.Lock()
-	defer lock.Unlock()
-
-	if _jwt != nil {
-		return _jwt
-	}
+	instance := Instance()
 
 	c := Config{
 		ContextKey: DefaultContextKey,
@@ -89,14 +92,14 @@ func Configure() *JwtInfo {
 		Debug:               true,
 		EnableAuthOnOptions: false,
 	}
-	_jwt = &JwtInfo{Config: c}
-	//return &JwtInfo{Config: c}
-	return _jwt
+	instance = &JWT{Config: c}
+	//return &JWT{Config: c}
+	return instance
 }
 
-func Serve(ctx context.Context) bool {
-	_jwt := Configure()
-	if err := _jwt.CheckJWT(ctx); err != nil {		
+func Filter(ctx context.Context) bool {
+	instance := Configure()
+	if err := instance.CheckJWT(ctx); err != nil {
 		golog.Errorf("Check jwt error, %s", err)
 		return false
 	}
@@ -121,8 +124,8 @@ func NewJWT() *jwtmiddleware.Middleware {
 		ErrorHandler: func(ctx context.Context, err error) {
 			if err == nil {
 				return
-			} 
-			ctx.StopExecution()	
+			}
+			ctx.StopExecution()
 			ctx.JSON(response.NewUnauthorizedResult(err.Error()))
 		},
 		Expiration: true,
@@ -177,7 +180,7 @@ func NewToken(user *models.User) (string, error) {
 	expireTime := time.Now().Add(time.Duration(config.AppConfig.JwtTimeout) * time.Second)
 
 	claims := Claims{
-		user.ID,
+		user.Id,
 		user.Username,
 		//user.Password,
 		jwt.StandardClaims{
@@ -187,7 +190,7 @@ func NewToken(user *models.User) (string, error) {
 	}
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	//tokenClaims := _jwt.NewWithClaims(_jwt.SigningMethodHS256, _jwt.MapClaims{
+	//tokenClaims := instance.NewWithClaims(instance.SigningMethodHS256, instance.MapClaims{
 	//	"nick_name": "iris",
 	//	"email":     "go-iris@qq.com",
 	//	"id":        "1",
@@ -218,7 +221,7 @@ func ParseToken(tokenString string, key string) (interface{}, bool) {
 }*/
 func ParseToken(ctx context.Context) (*models.User, bool) {
 	//token := GetToken(ctx)
-	mapClaims := (_jwt.Get(ctx).Claims).(jwt.MapClaims)
+	mapClaims := (instance.Get(ctx).Claims).(jwt.MapClaims)
 
 	id, ok1 := mapClaims["id"].(float64)
 	username, ok2 := mapClaims["username"].(string)
@@ -230,7 +233,7 @@ func ParseToken(ctx context.Context) (*models.User, bool) {
 	}
 
 	user := models.User{
-		ID:       int64(id),
+		Id:       int64(id),
 		Username: username,
 	}
 	return &user, true
@@ -258,12 +261,12 @@ func GetUserID(token string) int {
 */
 
 // Get returns the user (&token) information for this client/request
-func (m *JwtInfo) Get(ctx context.Context) *jwt.Token {
+func (m *JWT) Get(ctx context.Context) *jwt.Token {
 	return ctx.Values().Get(m.Config.ContextKey).(*jwt.Token)
 }
 
 // CheckJWT the main functionality, checks for token
-func (m *JwtInfo) CheckJWT(ctx context.Context) error {
+func (m *JWT) CheckJWT(ctx context.Context) error {
 	if !m.Config.EnableAuthOnOptions {
 		if ctx.Method() == iris.MethodOptions {
 			return nil
