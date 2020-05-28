@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-18 09:21:47
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-28 20:59:08
+ * @LastEditTime: 2020-05-28 21:55:20
  */
 package config
 
@@ -27,6 +27,7 @@ type AppInfo struct {
 	LogLevel   string   `yaml:"logLevel"`
 	Secret     string   `yaml:"secret"`
 	ApiPrefix  string   `yaml:"apiPrefix"`
+	SqlPath  string   `yaml:"sqlPath"`
 }
 
 type AnonymousRequset struct{

@@ -1,24 +1,25 @@
 /*
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: joshua
  * @Date: 2020-05-18 09:21:47
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-26 17:47:59
- */ 
+ * @LastEditTime: 2020-05-28 22:41:23
+ */
 package datasource
 
 import (
-	"fmt"
 	"commons/config"
+	"fmt"
 	"sync"
 
-	"github.com/go-xorm/xorm"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/core"
 	"github.com/kataras/golog"
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/xormplus/xorm"
 
 )
+
 var (
 	masterEngine *xorm.Engine
 	slaveEngine  *xorm.Engine
@@ -46,7 +47,7 @@ func MasterEngine() *xorm.Engine {
 	}
 	configure(engine, &master)
 	engine.SetMapper(core.GonicMapper{})
-
+	config.RegisterSql(engine)
 	masterEngine = engine
 	return masterEngine
 }
@@ -71,6 +72,7 @@ func SlaveEngine() *xorm.Engine {
 		return nil
 	}
 	configure(engine, &slave)
+	config.RegisterSql(engine)
 
 	slaveEngine = engine
 	return engine

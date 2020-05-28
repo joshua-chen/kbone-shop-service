@@ -8,3 +8,4 @@ anonymousRequset:
     suffixes: [_doc.html]
 staticPath: /static
 apiPrefix: /api/v1/
+sqlPath: ./sql/mysql

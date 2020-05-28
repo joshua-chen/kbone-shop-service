@@ -5,6 +5,7 @@ go 1.14
 require (
 	commons/config v0.0.0
 	commons/datasource v0.0.0-00010101000000-000000000000 // indirect
+	commons/exception v0.0.0-00010101000000-000000000000 // indirect
 	commons/middleware v0.0.0-00010101000000-000000000000
 	commons/middleware/auth v0.0.0-00010101000000-000000000000 // indirect
 	commons/middleware/casbin v0.0.0-00010101000000-000000000000 // indirect
@@ -29,10 +30,11 @@ require (
 	github.com/go-openapi/swag v0.19.9 // indirect
 	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/go-xorm/core v0.6.3 // indirect
-	github.com/go-xorm/xorm v0.7.9 // indirect
+	github.com/xormplus/xorm v0.0.0-20200430045551-96878f084315 // indirect
 	github.com/iris-contrib/swagger/v12 v12.0.1
 	github.com/kataras/iris/v12 v12.1.8
 	github.com/klauspost/compress v1.10.5 // indirect
+	github.com/lib/pq v1.5.2 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/nats-io/nats-server/v2 v2.1.7 // indirect
 	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37 // indirect
@@ -41,7 +43,7 @@ require (
 	shop/docs v0.0.0
 	shop/repositories v0.0.0-00010101000000-000000000000 // indirect
 	shop/routes v0.0.0
-	shop/routes/products v0.0.0-00010101000000-000000000000 // indirect
+	shop/routes/products v0.0.0-000101010000go00-000000000000 // indirect
 	shop/routes/users v0.0.0-00010101000000-000000000000 // indirect
 	shop/services v0.0.0 // indirect
 )
@@ -59,6 +61,8 @@ replace commons/utils/yaml => ../commons/utils/yaml
 replace commons/utils/security => ../commons/utils/security
 
 replace commons/utils/security/aes => ../commons/utils/security/aes
+
+replace commons/exception => ../commons/exception
 
 replace commons/mvc/models => ../commons/mvc/models
 
