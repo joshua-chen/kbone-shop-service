@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-18 09:21:47
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-28 22:41:23
+ * @LastEditTime: 2020-05-29 00:12:34
  */
 package datasource
 
@@ -14,9 +14,9 @@ import (
 	"sync"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/go-xorm/core"
-	"github.com/kataras/golog"
+	"github.com/xormplus/core"
 	"github.com/xormplus/xorm"
+	"github.com/kataras/golog"
 
 )
 

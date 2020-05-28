@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: joshua
+ * @Date: 2020-05-27 15:43:36
+ * @LastEditors: joshua
+ * @LastEditTime: 2020-05-29 00:28:24
+ */ 
 package models
 
 import (
@@ -42,7 +50,7 @@ func GetPaginationRoles(page *request.Pagination) ([]*CasbinRule, int64, error) 
 
 func UpdateRoleById(role *CasbinRule) (int64, error) {
 	e := datasource.MasterEngine()
-	return e.Id(role.Id).Update(role)
+	return e.ID(role.Id).Update(role)
 }
 
 func DeleteByRoles(rids []int64) (effect int64, err error) {
@@ -50,7 +58,7 @@ func DeleteByRoles(rids []int64) (effect int64, err error) {
 
 	cr := new(CasbinRule)
 	for _, v := range rids {
-		i, err1 := e.Id(v).Delete(cr)
+		i, err1 := e.ID(v).Delete(cr)
 		effect += i
 		err = err1
 	}

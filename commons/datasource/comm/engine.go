@@ -12,7 +12,7 @@ import (
 	"commons/datasource"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/go-xorm/core"
+	"github.com/xormplus/core"
 	"github.com/xormplus/xorm"
 
 )

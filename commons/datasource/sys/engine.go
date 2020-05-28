@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-18 09:21:47
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-28 16:39:01
+ * @LastEditTime: 2020-05-29 00:14:14
  */
 package sys
 
@@ -12,7 +12,7 @@ import (
 	"commons/datasource"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/go-xorm/core"
+	"github.com/xormplus/core"
 	"github.com/xormplus/xorm"
 
 )

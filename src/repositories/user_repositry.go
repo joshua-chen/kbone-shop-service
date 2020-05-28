@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-17 00:11:13
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-28 20:41:59
+ * @LastEditTime: 2020-05-29 00:28:56
  */
 package repositories
 
@@ -78,7 +78,7 @@ func (repo *userRepository) GetUsersByUids(uids []int64, page *request.Paginatio
 
 func (repo *userRepository) UpdateUserById(user *models.User) (int64, error) {
 	e := datasource.MasterEngine()
-	return e.Id(user.Id).Update(user)
+	return e.ID(user.Id).Update(user)
 }
 
 func (repo *userRepository) DeleteByUsers(uids []int64) (effect int64, err error) {
@@ -86,7 +86,7 @@ func (repo *userRepository) DeleteByUsers(uids []int64) (effect int64, err error
 
 	u := new(models.User)
 	for _, v := range uids {
-		i, err1 := e.Id(v).Delete(u)
+		i, err1 := e.ID(v).Delete(u)
 		effect += i
 		err = err1
 	}
