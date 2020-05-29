@@ -12,7 +12,6 @@ package products
 import (
 	_"commons/middleware"
 	_"commons/middleware/jwt"
-	_ "commons/middleware/jwt/route"
 	 "commons/mvc/route"
 	_ "fmt"
 	_ "net/http"

@@ -1,4 +1,4 @@
-module commons/middleware/jwt/route
+module commons/mvc/route
 
 go 1.14
 

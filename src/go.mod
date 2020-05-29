@@ -11,7 +11,6 @@ require (
 	commons/middleware/casbin v0.0.0-00010101000000-000000000000 // indirect
 	commons/middleware/cors v0.0.0-00010101000000-000000000000
 	commons/middleware/jwt v0.0.0-00010101000000-000000000000 // indirect
-	commons/middleware/jwt/route v0.0.0-00010101000000-000000000000 // indirect
 	commons/middleware/models v0.0.0-00010101000000-000000000000 // indirect
 	commons/middleware/recover v0.0.0-00010101000000-000000000000
 	commons/mvc v0.0.0-00010101000000-000000000000 // indirect
@@ -72,6 +71,8 @@ replace commons/exception => ../commons/exception
 
 replace commons/mvc/models => ../commons/mvc/models
 
+replace commons/mvc/route => ../commons/mvc/route
+
 replace commons/mvc/context => ../commons/mvc/context
 
 replace commons/mvc/context/response => ../commons/mvc/context/response
@@ -93,8 +94,6 @@ replace commons/middleware/casbin => ../commons/middleware/casbin
 replace commons/middleware/jwt => ../commons/middleware/jwt
 
 replace commons/middleware/recover => ../commons/middleware/recover
-
-replace commons/middleware/jwt/route => ../commons/middleware/jwt/route
 
 replace commons/middleware/cors => ../commons/middleware/cors
 

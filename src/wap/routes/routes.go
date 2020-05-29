@@ -12,7 +12,7 @@ package routes
 import (
 	_"commons/middleware"
 	_"commons/middleware/jwt"
-	_ "commons/middleware/jwt/route"
+	_ "commons/mvc/route"
 	_ "commons/mvc/context/response"
 	_ "fmt"
 	_ "net/http"

@@ -12,7 +12,7 @@ package websockets
 import (
 	_"commons/middleware"
 	_"commons/middleware/jwt"
-	_ "commons/middleware/jwt/route"
+	_ "commons/mvc/route"
 	 "commons/mvc/route"
 	_ "fmt"
 	_ "net/http"
