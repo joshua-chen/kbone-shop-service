@@ -24,17 +24,6 @@
                     "application/json"
                 ],
                 "summary": "产品列表",
-                "parameters": [
-                    {
-                        "description": "body参数",
-                        "name": "body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.Pagination"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "ok\" \"返回用户信息",
@@ -130,121 +119,6 @@
                             "type": "string"
                         }
                     }
-                }
-            }
-        },
-        "/wap/products": {
-            "post": {
-                "description": "产品列表",
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "产品列表",
-                "parameters": [
-                    {
-                        "description": "body参数",
-                        "name": "body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.Pagination"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "ok\" \"返回用户信息",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "err_code：10002 参数错误； err_code：10003 校验错误",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "err_code：10001 登录失败",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "err_code：20001 服务错误；err_code：20002 接口错误；err_code：20003 无数据错误；err_code：20004 数据库异常；err_code：20005 缓存异常",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/web/products": {
-            "post": {
-                "description": "产品列表",
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "产品列表",
-                "responses": {
-                    "200": {
-                        "description": "ok\" \"返回用户信息",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "err_code：10002 参数错误； err_code：10003 校验错误",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "err_code：10001 登录失败",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "err_code：20001 服务错误；err_code：20002 接口错误；err_code：20003 无数据错误；err_code：20004 数据库异常；err_code：20005 缓存异常",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "definitions": {
-        "request.Pagination": {
-            "type": "object",
-            "properties": {
-                "endDate": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "limit": {
-                    "type": "integer"
-                },
-                "offset": {
-                    "type": "integer"
-                },
-                "pageNum": {
-                    "type": "integer"
-                },
-                "pageSize": {
-                    "type": "integer"
-                },
-                "sortName": {
-                    "type": "string"
-                },
-                "sortOrder": {
-                    "type": "string"
-                },
-                "startDate": {
-                    "type": "string"
                 }
             }
         }

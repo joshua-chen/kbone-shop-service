@@ -17,24 +17,13 @@
     },
     "basePath": "config.AppConfig.ApiPrefix.Common",
     "paths": {
-        "/products": {
+        "/wap/products": {
             "post": {
                 "description": "产品列表",
                 "produces": [
                     "application/json"
                 ],
                 "summary": "产品列表",
-                "parameters": [
-                    {
-                        "description": "body参数",
-                        "name": "body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.Pagination"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "ok\" \"返回用户信息",
@@ -60,40 +49,6 @@
                             "type": "string"
                         }
                     }
-                }
-            }
-        }
-    },
-    "definitions": {
-        "request.Pagination": {
-            "type": "object",
-            "properties": {
-                "endDate": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "limit": {
-                    "type": "integer"
-                },
-                "offset": {
-                    "type": "integer"
-                },
-                "pageNum": {
-                    "type": "integer"
-                },
-                "pageSize": {
-                    "type": "integer"
-                },
-                "sortName": {
-                    "type": "string"
-                },
-                "sortOrder": {
-                    "type": "string"
-                },
-                "startDate": {
-                    "type": "string"
                 }
             }
         }

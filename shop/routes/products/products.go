@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-18 14:54:08
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-28 21:13:34
+ * @LastEditTime: 2020-05-30 00:57:33
  */ 
 package products
 
@@ -23,7 +23,6 @@ import (
 // @Summary 产品列表
 // @Description 产品列表
 // @Produce json
-// @Param body body request.Pagination true "body参数"
 // @Success 200 {string} string "ok" "返回用户信息"
 // @Failure 400 {string} string "err_code：10002 参数错误； err_code：10003 校验错误"
 // @Failure 401 {string} string "err_code：10001 登录失败"
