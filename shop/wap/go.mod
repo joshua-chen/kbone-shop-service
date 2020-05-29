@@ -101,7 +101,7 @@ replace shop/services => ../services
 
 replace shop/middleware => ../middleware
 
-replace shop/wap/docs => ../docs
+replace shop/wap/docs => ./docs
 
 replace shop/wap/routes => ./routes
 
