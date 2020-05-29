@@ -1,4 +1,4 @@
-module shop
+module shop_wap
 
 go 1.14
 
@@ -7,7 +7,7 @@ require (
 	github.com/agrison/go-tablib v0.0.0-20160310143025-4930582c22ee // indirect
 	github.com/agrison/mxj v0.0.0-20160310142625-1269f8afb3b4 // indirect
 	github.com/ajg/form v1.5.1 // indirect
-	github.com/betacraft/yaag v1.0.0 // indirect
+	github.com/betacraft/yaag v1.0.0
 	github.com/bndr/gotabulate v1.1.2 // indirect
 	github.com/casbin/casbin v1.9.1 // indirect
 	github.com/clbanning/mxj v1.8.4 // indirect
@@ -23,10 +23,11 @@ require (
 	github.com/iris-contrib/httpexpect v1.1.2 // indirect
 	github.com/iris-contrib/middleware/cors v0.0.0-20191219204441-78279b78a367 // indirect
 	github.com/iris-contrib/middleware/jwt v0.0.0-20191219204441-78279b78a367 // indirect
-	github.com/iris-contrib/swagger/v12 v12.0.1 // indirect
+	github.com/iris-contrib/swagger/v12 v12.0.1
 	github.com/jmespath/go-jmespath v0.3.0 // indirect
 	github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 // indirect
 	github.com/kataras/golog v0.0.15 // indirect
+	github.com/kataras/iris/v12 v12.1.8
 	github.com/klauspost/compress v1.10.5 // indirect
 	github.com/lib/pq v1.5.2 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
@@ -69,8 +70,6 @@ replace commons/exception => ../commons/exception
 
 replace commons/mvc/models => ../commons/mvc/models
 
-replace commons/mvc/route => ../commons/mvc/route
-
 replace commons/mvc/context => ../commons/mvc/context
 
 replace commons/mvc/context/response => ../commons/mvc/context/response
@@ -93,30 +92,22 @@ replace commons/middleware/jwt => ../commons/middleware/jwt
 
 replace commons/middleware/recover => ../commons/middleware/recover
 
+replace commons/mvc/route => ../commons/mvc/route
+
 replace commons/middleware/cors => ../commons/middleware/cors
 
-replace shop/datamodels => ./datamodels
+replace shop/datamodels => ../shop/datamodels
 
-replace shop/repositories => ./repositories
+replace shop/repositories => ../shop/repositories
 
-replace shop/services => ./services
+replace shop/services => ../shop/services
 
-replace shop/middleware => ./middleware
+replace shop/middleware => ../middleware
 
-replace shop/routes => ./routes
+replace shop/wap/docs => ./docs
 
-replace shop/routes/users => ./routes/users
+replace shop/wap/routes => ./routes
 
-replace shop/routes/products => ./routes/products
-
-replace shop/docs => ./docs
-
-replace shop/wap/routes => ../shop_wap/routes
-
-replace shop/wap/routes/products => ../shop_wap/routes/products
-
-replace shop/web/routes => ../shop_wap/routes
-
-replace shop/web/routes/products => ../shop_wap/routes/products
+replace shop/wap/routes/products => ./routes/products
 
 replace github.com/xormplus/core v0.6.3 => xorm.io/core v0.6.3

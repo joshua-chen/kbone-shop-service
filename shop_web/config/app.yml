@@ -12,4 +12,4 @@ apiPrefix:
     common: /common
     wap: /wap
     web: /web  
-sqlPath: ../sql/mysql
+sqlPath: ../shop/sql/mysql
