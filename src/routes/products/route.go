@@ -39,10 +39,13 @@ func Register(app *iris.Application) {
 	service := services.NewUserService()
 	deps.Register(service)
 	
-	// GET: /api/v1/products
-	route.ApiParty(app).PartyFunc("/products", func(router iris.Party) {		
-		router.Get("/", deps.Handler(Products))
-		//router.PartyFunc("/{name:string}", registerProductRoutes)
+	// GET: /api/v1/common/products
+ 
+	route.PartyCommon(app, func(router iris.Party) {
+		router.PartyFunc("/products", func(router iris.Party){
+			router.Get("/", deps.Handler(Products))
+			//router.PartyFunc("/{name:string}", registerProductRoutes)
+		})	 
 	})
 }
  

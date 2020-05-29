@@ -16,6 +16,7 @@ require (
 	commons/middleware/recover v0.0.0-00010101000000-000000000000
 	commons/mvc v0.0.0-00010101000000-000000000000 // indirect
 	commons/mvc/application v0.0.0-00010101000000-000000000000
+	commons/mvc/context v0.0.0-00010101000000-000000000000 // indirect
 	commons/mvc/context/request v0.0.0-00010101000000-000000000000 // indirect
 	commons/mvc/context/response v0.0.0-00010101000000-000000000000
 	commons/mvc/context/response/msg v0.0.0-00010101000000-000000000000 // indirect
@@ -24,16 +25,11 @@ require (
 	commons/utils/security v0.0.0-00010101000000-000000000000 // indirect
 	commons/utils/security/aes v0.0.0-00010101000000-000000000000 // indirect
 	commons/utils/yaml v0.0.0-00010101000000-000000000000 // indirect
-	github.com/Chronokeeper/anyxml v0.0.0-20160530174208-54457d8e98c6 // indirect
-	github.com/agrison/go-tablib v0.0.0-20160310143025-4930582c22ee // indirect
-	github.com/agrison/mxj v0.0.0-20160310142625-1269f8afb3b4 // indirect
 	github.com/betacraft/yaag v1.0.0
-	github.com/bndr/gotabulate v1.1.2 // indirect
 	github.com/casbin/casbin v1.9.1 // indirect
 	github.com/clbanning/mxj v1.8.4 // indirect
 	github.com/go-openapi/spec v0.19.8 // indirect
 	github.com/go-openapi/swag v0.19.9 // indirect
-	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/iris-contrib/swagger/v12 v12.0.1
 	github.com/kataras/iris/v12 v12.1.8
@@ -41,15 +37,10 @@ require (
 	github.com/lib/pq v1.5.2 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/nats-io/nats-server/v2 v2.1.7 // indirect
-	github.com/syndtr/goleveldb v1.0.0 // indirect
-	github.com/tealeg/xlsx v1.0.5 // indirect
-	github.com/xormplus/builder v0.0.0-20200331055651-240ff40009be // indirect
 	github.com/xormplus/core v0.6.3 // indirect
-	github.com/xormplus/xorm v0.0.0-20200514184607-0f37421d8714 // indirect
 	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37 // indirect
 	golang.org/x/sys v0.0.0-20200523222454-059865788121 // indirect
 	golang.org/x/tools v0.0.0-20200515220128-d3bf790afa53 // indirect
-	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4 // indirect
 	shop/datamodels v0.0.0 // indirect
 	shop/docs v0.0.0
 	shop/repositories v0.0.0-00010101000000-000000000000 // indirect
@@ -57,6 +48,10 @@ require (
 	shop/routes/products v0.0.0-000101010000go00-000000000000 // indirect
 	shop/routes/users v0.0.0-00010101000000-000000000000 // indirect
 	shop/services v0.0.0 // indirect
+	shop/wap/routes v0.0.0-00010101000000-000000000000 // indirect
+	shop/wap/routes/products v0.0.0-00010101000000-000000000000 // indirect
+	shop/web/routes v0.0.0-00010101000000-000000000000 // indirect
+	shop/web/routes/products v0.0.0-00010101000000-000000000000 // indirect
 )
 
 replace commons/mvc/application => ../commons/mvc/application
@@ -76,6 +71,8 @@ replace commons/utils/security/aes => ../commons/utils/security/aes
 replace commons/exception => ../commons/exception
 
 replace commons/mvc/models => ../commons/mvc/models
+
+replace commons/mvc/context => ../commons/mvc/context
 
 replace commons/mvc/context/response => ../commons/mvc/context/response
 
@@ -116,5 +113,13 @@ replace shop/routes/users => ./routes/users
 replace shop/routes/products => ./routes/products
 
 replace shop/docs => ./docs
+
+replace shop/wap/routes => ./wap/routes
+
+replace shop/wap/routes/products => ./wap/routes/products
+
+replace shop/web/routes => ./web/routes
+
+replace shop/web/routes/products => ./web/routes/products
 
 replace github.com/xormplus/core v0.6.3 => xorm.io/core v0.6.3

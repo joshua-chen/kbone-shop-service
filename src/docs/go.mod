@@ -1,3 +1,3 @@
-module product/docs
+module shop/docs
 
 go 1.14

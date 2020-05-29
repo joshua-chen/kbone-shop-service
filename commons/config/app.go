@@ -22,17 +22,35 @@ type AppInfo struct {
 	Port       string   `yaml:"port"`
 	AnonymousUrls []string `yaml:"anonymousUrls"`
 	AnonymousRequset AnonymousRequset `yaml:"anonymousRequset"`
-	StaticPath  string   `yaml:"staticPath"`
+	StaticPath  []string   `yaml:"staticPath"`
 	JwtTimeout int64    `yaml:"jwtTimeout"`
 	LogLevel   string   `yaml:"logLevel"`
 	Secret     string   `yaml:"secret"`
-	ApiPrefix  string   `yaml:"apiPrefix"`
+	ApiPrefix  ApiPrefix   `yaml:"apiPrefix"`
 	SqlPath  string   `yaml:"sqlPath"`
+	Swagger Swagger   `yaml:"swagger"`
 }
 
 type AnonymousRequset struct{
 	Urls []string `yaml:"urls"`
 	Prefixes []string `yaml:"prefixes"`
 	Suffixes []string `yaml:"suffixes"`
-	
+}
+
+
+type ApiPrefix struct{
+	Base string `yaml:"base"`
+	Web string `yaml:"web"`
+	Wap string `yaml:"wap"`
+	Common string `yaml:"common"`
+}
+
+type Swagger struct{
+	Docs SwaggerDocs `yaml:"docs"`
+}
+
+type SwaggerDocs struct{
+	Web string `yaml:"web"`
+	Wap string `yaml:"wap"`
+	Common string `yaml:"common"`
 }

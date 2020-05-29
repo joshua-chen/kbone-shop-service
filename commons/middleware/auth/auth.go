@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-27 14:28:19
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-28 15:33:40
+ * @LastEditTime: 2020-05-29 10:43:05
  */
 package auth
 
@@ -12,8 +12,9 @@ import (
 	"commons/config"
 	"commons/middleware/casbin"
 	"commons/middleware/jwt"
+	_ "commons/mvc/context"
 	"commons/utils"
-	"strings"
+	_ "strings"
 	"sync"
 
 	"github.com/kataras/golog"
@@ -45,7 +46,7 @@ func (a *Auth) New() context.Handler {
 }
 
 func New() context.Handler {
-	return func(ctx context.Context) {
+	handler := func(ctx context.Context) {
 		path := ctx.Path()
 		golog.Debug(path)
 		// 过滤静态资源、login接口、首页等...不需要验证
@@ -59,18 +60,17 @@ func New() context.Handler {
 			return
 		}
 
-		// 系统菜单不进行权限拦截
-		if !strings.Contains(path, "/sysMenu") {
-			// casbin权限拦截
-			ok := casbin.Filter(ctx)
-			if !ok {
-				return
-			}
+		// casbin权限拦截
+		ok := casbin.Filter(ctx)
+		if !ok {
+			return
 		}
 
 		// Pass to real API
 		ctx.Next()
 	}
+
+	return handler
 }
 
 /**
@@ -79,8 +79,8 @@ return
 	false:需要进一步验证
 */
 func checkURL(requestPath string) bool {
-	staticPath := config.AppConfig.StaticPath
-	if utils.HasPrefix(requestPath, staticPath) {
+	requestStaticPath := config.AppConfig.StaticPath[0]
+	if utils.HasPrefix(requestPath, requestStaticPath) {
 		return true
 	}
 

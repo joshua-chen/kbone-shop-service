@@ -28,7 +28,7 @@ import (
 // @Failure 400 {string} string "err_code：10002 参数错误； err_code：10003 校验错误"
 // @Failure 401 {string} string "err_code：10001 登录失败"
 // @Failure 500 {string} string "err_code：20001 服务错误；err_code：20002 接口错误；err_code：20003 无数据错误；err_code：20004 数据库异常；err_code：20005 缓存异常"
-// @Router /products [post]
+// @Router /common/products [post]
 func Products(ctx iris.Context, service services.ProductService) (result response.Result) {
 	page := request.NewPagination(ctx)
 	data, count := service.GetAll(page)

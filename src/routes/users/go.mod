@@ -1,4 +1,4 @@
-module shop/routes/products
+module shop/routes/users
 
 go 1.14
 

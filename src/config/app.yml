@@ -6,6 +6,15 @@ anonymousRequset:
     urls: [/, /swagger]
     prefixes: [/api/v1/, /swagger]
     suffixes: [_doc.html]
-staticPath: /static
-apiPrefix: /api/v1/
+staticPath: [/static,./web/static]
+apiPrefix: 
+    base: /api/v1
+    common: /common
+    wap: /wap
+    web: /web    
 sqlPath: ./sql/mysql
+swagger:
+    docs:
+        wap: ./wap/docs
+        web: ./web/docs
+        common: ./docs

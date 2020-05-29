@@ -4,7 +4,7 @@
  * @Author: joshua
  * @Date: 2020-05-16 23:39:39
  * @LastEditors: joshua
- * @LastEditTime: 2020-05-28 21:16:22
+ * @LastEditTime: 2020-05-29 16:08:51
  */
 
 package routes
@@ -20,6 +20,8 @@ import (
 	_"shop/services"
 	"shop/routes/users"
 	"shop/routes/products"
+	wap "shop/wap/routes"
+	web "shop/web/routes"
 	_ "strings"
 
 	_ "github.com/jmespath/go-jmespath"
@@ -35,6 +37,8 @@ import (
 func Register(app *iris.Application) {
 	users.Register(app)
 	products.Register(app)
+	wap.Register(app);
+	web.Register(app);
 }
 
 

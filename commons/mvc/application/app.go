@@ -3,9 +3,9 @@ package application
 import (
 	"commons/config"
 	"commons/middleware"
-	_"commons/middleware/auth"
-	_"commons/middleware/cors"
-	_"commons/middleware/recover"
+	_ "commons/middleware/auth"
+	_ "commons/middleware/cors"
+	_ "commons/middleware/recover"
 	"commons/mvc/context/response"
 	_ "time"
 
@@ -21,28 +21,14 @@ import (
 	_ "github.com/kataras/iris/v12/sessions"
 )
 
-
 func Run(appFunc func(app *iris.Application)) {
-	//mvc.RunApp()
-	//return
 	app := newApp()
-	//route.GetToken(app)
-	//应用App设置
 	configation(app)
-
+	after(app)
 	appFunc(app)
-
-	// yaag api 为文档生成器
-	yaag.Init(&yaag.Config{
-		On:       true,
-		DocTitle: "Iris",
-		DocPath:  "apidoc.html",
-		BaseUrls: map[string]string{"Production": "", "Staging": ""},
-	})
-	app.Use(irisyaag.New())
-
 	app.Run(
-		iris.Addr(":"+config.AppConfig.Port),          //在端口8080进行监听
+		iris.Addr(":"+config.AppConfig.Port), //在端口8080进行监听
+		iris.WithCharset("UTF-8"),
 		iris.WithoutServerError(iris.ErrServerClosed), //无服务错误提示
 		iris.WithOptimizations,                        //对json数据序列化更快的配置
 	)
@@ -64,16 +50,25 @@ func newApp() *iris.Application {
 	app.Use(middleware.Instance().Recover.New())
 	app.Use(middleware.Instance().Auth.New())
 	app.Use(middleware.Instance().Cors.New()) // cors
+
+	// yaag api 为文档生成器
+	yaag.Init(&yaag.Config{
+		On:       true,
+		DocTitle: "Iris",
+		DocPath:  "apidoc.html",
+		BaseUrls: map[string]string{"Production": "", "Staging": ""},
+	})
+	app.Use(irisyaag.New())
+
 	/*sillyHTTPHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		println(r.RequestURI)
 	})
 	sillyConvertedToIon := iris.FromStd(sillyHTTPHandler)
 	app.Use(sillyConvertedToIon)
 	*/
-	
 
 	/*
-			
+
 
 			//注册视图文件
 			app.RegisterView(iris.HTML("./static", ".html"))
@@ -109,12 +104,14 @@ func newApp() *iris.Application {
 	return app
 }
 
-func handleStatic(app *iris.Application){
+func handleStatic(app *iris.Application) {
 	//注册静态资源
-	app.HandleDir("/static", "./static")
-	app.HandleDir("/manage/static", "./static")
-	app.HandleDir("/img", "./static/img")
+	staticPath := config.AppConfig.StaticPath
+	app.HandleDir(staticPath[0], staticPath[1])
+	//app.HandleDir("/manage/static", staticPath[1])
+	app.HandleDir(staticPath[0]+"/images", staticPath[1]+"/images")
 }
+
 /**
  * 项目设置
  */
@@ -122,6 +119,7 @@ func configation(app *iris.Application) {
 
 	//配置 字符编码
 	app.Configure(iris.WithConfiguration(iris.YAML("./config/iris.yml")))
+	//
 
 	//错误配置
 	//未发现错误
@@ -131,5 +129,13 @@ func configation(app *iris.Application) {
 
 	app.OnErrorCode(iris.StatusInternalServerError, func(context context.Context) {
 		context.JSON(response.NewErrorResult(iris.StatusInternalServerError))
+	})
+}
+
+func after(app *iris.Application) {
+	// 主持后置
+	app.Done(func(ctx iris.Context) {
+		//golog.Debug("后置............")
+		ctx.Application().Logger().Debug("后置............")
 	})
 }
