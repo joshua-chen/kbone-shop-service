@@ -1,4 +1,4 @@
-module commons/config
+module commons
 
 go 1.14
 

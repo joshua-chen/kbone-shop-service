@@ -14,10 +14,9 @@ import (
 	"sync"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/kataras/golog"
 	"github.com/xormplus/core"
 	"github.com/xormplus/xorm"
-	"github.com/kataras/golog"
-
 )
 
 var (
@@ -25,6 +24,18 @@ var (
 	slaveEngine  *xorm.Engine
 	lock         sync.Mutex
 )
+
+func MasterEngineByFeature(featureName string) {
+	var prefix string
+	for _, v := range config.DBConfig.TablePrefixes {
+		if v.FeatureName == featureName {
+			prefix = v.PrefixName
+		}
+	}
+	engine := MasterEngine()
+	tbMapper := core.NewPrefixMapper(core.GonicMapper{}, prefix)
+	engine.SetTableMapper(tbMapper)
+}
 
 // 主库，单例
 func MasterEngine() *xorm.Engine {
@@ -50,6 +61,17 @@ func MasterEngine() *xorm.Engine {
 	config.RegisterSql(engine)
 	masterEngine = engine
 	return masterEngine
+}
+func SlaveEngineByFeature(featureName string) {
+	var prefix string
+	for _, v := range config.DBConfig.TablePrefixes {
+		if v.FeatureName == featureName {
+			prefix = v.PrefixName
+		}
+	}
+	engine := SlaveEngine()
+	tbMapper := core.NewPrefixMapper(core.GonicMapper{}, prefix)
+	engine.SetTableMapper(tbMapper)
 }
 
 // 从库，单例

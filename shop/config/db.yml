@@ -23,3 +23,7 @@ slave:
   logLevel: debug
   maxIdleConns: 10 # 连接池的空闲数大小
 #  maxOpenConns: 10 # 最大打开连接数
+
+tablePrefix:
+  - {featureName: "System", prefixName: "sys"}
+  - {featureName: "Common" , prefixName: "comm"}

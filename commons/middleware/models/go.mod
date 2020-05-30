@@ -13,8 +13,8 @@ replace commons/utils/yaml => ../../utils/yaml
 replace commons/mvc/context/request => ../../mvc/context/request
 
 require (
-	commons/datasource v0.0.0-00010101000000-000000000000
-	commons/mvc/context/request v0.0.0-00010101000000-000000000000
+	commons/datasource v0.0.0-00010101000000-000000000000 //indirect
+	commons/mvc/context/request v0.0.0-00010101000000-000000000000 //indirect
 	github.com/ajg/form v1.5.1 // indirect
 	github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072 // indirect
 	github.com/google/go-querystring v1.0.0 // indirect

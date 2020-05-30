@@ -12,8 +12,14 @@ var (
 type DB struct {
 	Master DBInfo `yaml:"master"`
 	Slave  DBInfo `yaml:"slave"`
+
+	TablePrefixes []TablePrefix `yaml:"tablePrefix"`
 }
 
+type TablePrefix struct {
+	PrefixName string `yaml:"prefixName"`
+	FeatureName string `yaml:"featureName"`
+}
 type DBInfo struct {
 	Dialect      string `yaml:"dialect"`
 	User         string `yaml:"user"`

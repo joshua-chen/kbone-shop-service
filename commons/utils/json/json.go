@@ -5,18 +5,23 @@
  * @Date: 2020-05-19 09:29:27
  * @LastEditors: joshua
  * @LastEditTime: 2020-05-19 09:29:40
- */ 
- func GetJsonConfig() *AppConfig {
-	file, err := os.Open("config/app.json")
+ */
+package json
+
+import (
+	"encoding/json"
+	"os"
+)
+
+func GetJson(path string , s interface{})  interface{}{
+	file, err := os.Open(path)
 	if err != nil {
 		panic(err.Error())
 	}
 	decoder := json.NewDecoder(file)
-	conf := AppConfig{}
-	err = decoder.Decode(&conf)
+	err = decoder.Decode(&s)
 	if err != nil {
 		panic(err.Error())
 	}
-	return &conf
-
+	return &s
 }
