@@ -11,8 +11,8 @@ package services
 import (
 	"shop/datamodels"
 	"shop/repositories"
-	_ "commons/mvc/models"
-	"commons/mvc/context/request"
+	_ "github.com/joshua-chen/go-commons/mvc/models"
+	"github.com/joshua-chen/go-commons/mvc/context/request"
 
 )
 

@@ -9,8 +9,8 @@
 package datamodels
 
 import (
-	_"commons/middleware/jwt"
-	"commons/middleware/models"
+	_"github.com/joshua-chen/go-commons/middleware/jwt"
+	"github.com/joshua-chen/go-commons/middleware/models"
 
 )
 

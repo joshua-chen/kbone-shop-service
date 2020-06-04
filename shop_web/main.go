@@ -9,12 +9,12 @@
 package main
 
 import (
-	_ "commons/config"
-	_ "commons/middleware"
-	_ "commons/middleware/cors"
-	_ "commons/middleware/recover"
-	"commons/mvc/application"
-	_ "commons/mvc/context/response"
+	_ "github.com/joshua-chen/go-commons/config"
+	_ "github.com/joshua-chen/go-commons/middleware"
+	_ "github.com/joshua-chen/go-commons/middleware/cors"
+	_ "github.com/joshua-chen/go-commons/middleware/recover"
+	"github.com/joshua-chen/go-commons/mvc/application"
+	_ "github.com/joshua-chen/go-commons/mvc/context/response"
 	"shop/web/routes"
 	_ "time"
 

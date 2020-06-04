@@ -10,9 +10,9 @@
 package products
 
 import (
-	_"commons/middleware"
-	_"commons/middleware/jwt"
-	 "commons/mvc/route"
+	_"github.com/joshua-chen/go-commons/middleware"
+	_"github.com/joshua-chen/go-commons/middleware/jwt"
+	 "github.com/joshua-chen/go-commons/mvc/route"
 	_ "fmt"
 	_ "net/http"
 	_"shop/repositories"

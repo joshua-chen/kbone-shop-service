@@ -1,8 +1,8 @@
 package services
 
 import (
-	"commons/middleware/models"
-	"commons/utils/security/aes"
+	"github.com/joshua-chen/go-commons/middleware/models"
+	"github.com/joshua-chen/go-commons/utils/security/aes"
 	"errors"
 	"fmt"
 	"shop/repositories"

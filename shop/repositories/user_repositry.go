@@ -9,9 +9,9 @@
 package repositories
 
 import (
-	"commons/datasource"
-	"commons/middleware/models"
-	"commons/mvc/context/request"
+	"github.com/joshua-chen/go-commons/datasource"
+	"github.com/joshua-chen/go-commons/middleware/models"
+	"github.com/joshua-chen/go-commons/mvc/context/request"
 	_ "errors"
 	"sync"
 

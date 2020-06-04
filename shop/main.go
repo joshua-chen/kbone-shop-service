@@ -9,15 +9,9 @@
 package main
 
 import (
-	"commons/mvc/application"
-	_ "commons/config"
-	_ "commons/middleware"
-	_ "commons/middleware/cors"
-	_ "commons/middleware/recover"
-	_ "commons/mvc/context/response"
+	"github.com/joshua-chen/go-commons/mvc/application"
 	"shop/routes"
 	_ "time"
-
 	_ "github.com/betacraft/yaag/irisyaag"
 	_ "github.com/betacraft/yaag/yaag"
 	"github.com/iris-contrib/swagger/v12"

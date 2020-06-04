@@ -9,9 +9,9 @@
 package users
 
 import (
-	"commons/middleware/models"
-	"commons/mvc/context/response"
-	_ "commons/utils/security/aes"
+	"github.com/joshua-chen/go-commons/middleware/models"
+	"github.com/joshua-chen/go-commons/mvc/context/response"
+	_ "github.com/joshua-chen/go-commons/utils/security/aes"
 	_ "errors"
 	"shop/services"
 	_ "time"

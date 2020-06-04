@@ -9,9 +9,9 @@
 package products
 
 import (
-	"commons/mvc/context/request"
-	"commons/mvc/context/response"
-	_ "commons/mvc/models"
+	"github.com/joshua-chen/go-commons/mvc/context/request"
+	"github.com/joshua-chen/go-commons/mvc/context/response"
+	_ "github.com/joshua-chen/go-commons/mvc/models"
 	_ "shop/datamodels"
 	"shop/services"
 

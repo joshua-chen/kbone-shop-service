@@ -50,51 +50,9 @@ require (
 	golang.org/x/tools v0.0.0-20200515220128-d3bf790afa53 // indirect
 	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4 // indirect
 	moul.io/http2curl v1.0.0 // indirect
+	github.com/joshua-chen/go-commons v1.0.3
+
 )
-
-replace commons/mvc/application => ../commons/mvc/application
-
-replace commons/config => ../commons/config
-
-replace commons/datasource => ../commons/datasource
-
-replace commons/utils => ../commons/utils
-
-replace commons/utils/yaml => ../commons/utils/yaml
-
-replace commons/utils/security => ../commons/utils/security
-
-replace commons/utils/security/aes => ../commons/utils/security/aes
-
-replace commons/exception => ../commons/exception
-
-replace commons/mvc/models => ../commons/mvc/models
-
-replace commons/mvc/context => ../commons/mvc/context
-
-replace commons/mvc/context/response => ../commons/mvc/context/response
-
-replace commons/mvc/context/response/msg => ../commons/mvc/context/response/msg
-
-replace commons/mvc/context/request => ../commons/mvc/context/request
-
-replace commons/mvc => ../commons/mvc
-
-replace commons/middleware => ../commons/middleware
-
-replace commons/middleware/auth => ../commons/middleware/auth
-
-replace commons/middleware/models => ../commons/middleware/models
-
-replace commons/middleware/casbin => ../commons/middleware/casbin
-
-replace commons/middleware/jwt => ../commons/middleware/jwt
-
-replace commons/middleware/recover => ../commons/middleware/recover
-
-replace commons/mvc/route => ../commons/mvc/route
-
-replace commons/middleware/cors => ../commons/middleware/cors
 
 replace shop/datamodels => ../shop/datamodels
 

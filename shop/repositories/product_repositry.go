@@ -3,8 +3,8 @@ package repositories
 import (
 	"errors"
 	"sync"
-	"commons/datasource"
-	"commons/mvc/context/request"
+	"github.com/joshua-chen/go-commons/datasource"
+	"github.com/joshua-chen/go-commons/mvc/context/request"
 	"shop/datamodels"
 
 	"github.com/kataras/golog"

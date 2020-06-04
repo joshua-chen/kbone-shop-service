@@ -58,7 +58,7 @@ CREATE TABLE `demo` (
   `product_code` varchar(255) DEFAULT '',
   `product_name` varchar(255) DEFAULT '',
   `number` int(11) DEFAULT NULL,
-  `create_date` datetime DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 

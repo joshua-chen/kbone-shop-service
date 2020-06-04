@@ -9,9 +9,9 @@
 package websockets
 
 import (
-	_"commons/middleware/models"
-	_"commons/mvc/context/response"
-	_ "commons/utils/security/aes"
+	_"github.com/joshua-chen/go-commons/middleware/models"
+	_"github.com/joshua-chen/go-commons/mvc/context/response"
+	_ "github.com/joshua-chen/go-commons/utils/security/aes"
 	_ "errors"
 	_"shop/services"
 	_ "time"
