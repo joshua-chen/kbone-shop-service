@@ -10,10 +10,10 @@
 package routes
 
 import (
-	_"commons/middleware"
-	_"commons/middleware/jwt"
-	_ "commons/mvc/route"
-	_ "commons/mvc/context/response"
+	_"github.com/joshua-chen/go-commons/middleware"
+	_"github.com/joshua-chen/go-commons/middleware/jwt"
+	_ "github.com/joshua-chen/go-commons/mvc/route"
+	_ "github.com/joshua-chen/go-commons/mvc/context/response"
 	_ "fmt"
 	_ "net/http"
 	_"shop/repositories"
