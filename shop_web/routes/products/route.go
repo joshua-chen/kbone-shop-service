@@ -12,7 +12,6 @@ package products
 import (
 	_"github.com/joshua-chen/go-commons/middleware"
 	_"github.com/joshua-chen/go-commons/middleware/jwt"
-	_ "github.com/joshua-chen/go-commons/mvc/route"
 	 "github.com/joshua-chen/go-commons/mvc/route"
 	_ "fmt"
 	_ "net/http"
@@ -28,15 +27,12 @@ import (
 
 )
 
-var (
-	BaseUri = "/api/v1"
-)
  
 func Register(app *iris.Application) {
 	
 	//api.PartyFunc("/{name:string}", registerProductRoutes)
 	deps := hero.New()
-	service := services.NewUserService()
+	service := services.NewProductService()
 	deps.Register(service)
 	
 	// GET: /api/v1/products

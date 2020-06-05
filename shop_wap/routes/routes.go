@@ -10,29 +10,25 @@
 package routes
 
 import (
-	_"github.com/joshua-chen/go-commons/middleware"
-	_"github.com/joshua-chen/go-commons/middleware/jwt"
-	_ "github.com/joshua-chen/go-commons/mvc/route"
-	_ "github.com/joshua-chen/go-commons/mvc/context/response"
-	_ "fmt"
-	_ "net/http"
-	_"shop/repositories"
-	_"shop/services"
-	"shop/wap/routes/products"
-	_ "strings"
-
-	_ "github.com/jmespath/go-jmespath"
+	"shap_wap/routes/products"
 	"github.com/kataras/iris/v12"
-	_ "github.com/kataras/iris/v12/context"
-	_"github.com/kataras/iris/v12/hero"
-	_ "github.com/kataras/iris/v12/mvc"
 
 )
 
 
- 
+
 func Register(app *iris.Application) {
 	products.Register(app)
+	apidoc(app)
 }
 
+func apidoc(app *iris.Application) {
+
+	app.Get("/apidoc", func(ctx iris.Context) {
+		// 绑定： {{.message}}　为　"Hello world!"
+		//ctx.ViewData("message", "Hello world!")
+		// 渲染模板文件： ./views/hello.html
+		ctx.View("apidoc.html")
+	})
+}
 

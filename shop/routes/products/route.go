@@ -27,15 +27,12 @@ import (
 
 )
 
-var (
-	BaseUri = "/api/v1"
-)
- 
+
 func Register(app *iris.Application) {
 	
 	//api.PartyFunc("/{name:string}", registerProductRoutes)
 	deps := hero.New()
-	service := services.NewUserService()
+	service := services.NewProductService()
 	deps.Register(service)
 	
 	// GET: /api/v1/common/products

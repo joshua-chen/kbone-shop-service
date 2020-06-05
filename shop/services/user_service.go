@@ -1,20 +1,25 @@
 package services
 
 import (
+	"github.com/joshua-chen/go-commons/exception"
+	"github.com/joshua-chen/go-commons/middleware/jwt"
+	"github.com/joshua-chen/go-commons/mvc/context/request"
 	"github.com/joshua-chen/go-commons/middleware/models"
 	"github.com/joshua-chen/go-commons/utils/security/aes"
 	"errors"
 	"fmt"
+	_"shop/datamodels"
 	"shop/repositories"
 	"time"
 
 )
 
 type UserService interface {
-	GetAll() []models.User
+	GetAll(page *request.Pagination) ([]*models.User,int64)
 	Registe(user *models.User) bool
 	GetByID(id int64) (models.User, bool)
 	DeleteByID(id int64) bool
+	NewToken(user *models.User) string
 }
 
 // NewUserService 返回默认的 user 服务层.
@@ -29,8 +34,8 @@ type userService struct {
 }
 
 // GetAll 返回所有的 users.
-func (s *userService) GetAll() []models.User {
-	return []models.User{}
+func (s *userService) GetAll( page *request.Pagination) ([]*models.User,int64) {
+	return s.repo.SelectMany(page)
 }
 
 func (s *userService) GetByID(id int64) (models.User, bool) {
@@ -56,4 +61,15 @@ func (s *userService) Registe(user *models.User) bool {
 	}
 
 	return true
+}
+
+func (s *userService) NewToken(user *models.User) string {
+
+	//user:= models.User{}
+	token, err:= jwt.NewToken(user)
+	if err != nil{
+		exception.Instance().Fatal(err)
+	}
+
+	return token
 }

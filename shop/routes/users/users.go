@@ -9,6 +9,7 @@
 package users
 
 import (
+	"github.com/joshua-chen/go-commons/mvc/context/request"
 	"github.com/joshua-chen/go-commons/middleware/models"
 	"github.com/joshua-chen/go-commons/mvc/context/response"
 	_ "github.com/joshua-chen/go-commons/utils/security/aes"
@@ -28,10 +29,13 @@ import (
 // @Failure 401 {string} string "err_code：10001 登录失败"
 // @Failure 500 {string} string "err_code：20001 服务错误；err_code：20002 接口错误；err_code：20003 无数据错误；err_code：20004 数据库异常；err_code：20005 缓存异常"
 // @Router /common/users [get]
-func Users(service services.UserService) (results []models.User) {
-	return service.GetAll()
-}
+func Users(ctx iris.Context, service services.UserService) (result response.Result) {
+	page := request.NewPagination(ctx)
+	data, total := service.GetAll(page)
+	//return response.ToResult(data)
+	return response.DefaultResult(iris.Map{"rows": data, "total": total})
 
+}
 // @Summary 用户注册
 // @Description 用户注册
 // @Produce json
@@ -44,4 +48,11 @@ func Registe(ctx iris.Context, service services.UserService) (result response.Re
 	user := new(models.User)
 	ctx.ReadJSON(&user)
 	return response.DefaultResult(service.Registe(user))
+}
+
+func  NewToken(ctx iris.Context, service services.UserService)  (result response.Result){
+	username := ctx.Params().Get("username")
+	user := models.User{Username:username}
+	token:= service.NewToken(&user)
+	return response.DefaultResult(token)
 }

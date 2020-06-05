@@ -10,11 +10,12 @@ package repositories
 
 import (
 	"github.com/joshua-chen/go-commons/datasource"
-	"github.com/joshua-chen/go-commons/middleware/models"
 	"github.com/joshua-chen/go-commons/mvc/context/request"
+	"github.com/joshua-chen/go-commons/middleware/models"
 	_ "errors"
+	_"shop/datamodels"
 	"sync"
-
+	"github.com/kataras/golog"
 )
 
 // Query代表一种“访客”和它的查询动作。
@@ -24,6 +25,7 @@ type UserQuery func(models.User) bool
 // 这是一个以测试为目的的接口，即是一个内存中的user库
 // 或是一个连接到数据库的实例。
 type UserRepository interface {
+	SelectMany( page *request.Pagination) ([]*models.User, int64)
 	CreateUser(user ...*models.User) (int64, error)
 
 	GetUserByUsername(user *models.User) (bool, error)
@@ -47,6 +49,26 @@ func NewUserRepository() UserRepository {
 // 它负责存储于内存中的实例数据(map)
 type userRepository struct {
 	mu sync.RWMutex
+}
+
+func (r *userRepository) SelectMany( page *request.Pagination) ([]*models.User, int64) {
+	engine := datasource.MasterEngine()
+
+	golog.Debugf("engine ")
+	entities := make([]*models.User, 0)
+
+	s := engine.Limit(page.Limit, page.Offset)
+	if page.SortName != "" {
+		switch page.SortOrder {
+		case "asc":
+			s.Asc(page.SortName)
+		case "desc":
+			s.Desc(page.SortName)
+		}
+	}
+	count, _ := s.FindAndCount(&entities)
+	return entities, count
+
 }
 
 func (repo *userRepository) CreateUser(user ...*models.User) (int64, error) {

@@ -31,7 +31,6 @@ import (
 func Products(ctx iris.Context, service services.ProductService) (result response.Result) {
 	page := request.NewPagination(ctx)
 	data, count := service.GetAll(page)
-	//return response.ToResult(data)
 	return response.DefaultResult(iris.Map{"rows": data, "count": count})
 
 }

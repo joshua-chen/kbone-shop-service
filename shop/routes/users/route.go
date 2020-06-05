@@ -42,6 +42,9 @@ func Register(app *iris.Application) {
 		router.PartyFunc("/users", func(router iris.Party){
 			router.Get("/", deps.Handler(Users))
 			router.Any("/registe", deps.Handler(Registe))
+			router.Any("/newtoken", deps.Handler(NewToken))
+
+			//NewToken
 			//router.PartyFunc("/{name:string}", registerProductRoutes)
 		})	 
 	})

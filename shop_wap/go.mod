@@ -12,21 +12,20 @@ require (
 	github.com/iris-contrib/formBinder v5.0.0+incompatible // indirect
 	github.com/iris-contrib/httpexpect v1.1.2 // indirect
 	github.com/iris-contrib/swagger/v12 v12.0.1
-	github.com/joshua-chen/go-commons v1.0.4
+	github.com/joshua-chen/go-commons v1.0.10
 	github.com/kataras/iris/v12 v12.1.8
 	github.com/klauspost/compress v1.10.5 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
-	github.com/xormplus/core v0.6.3 // indirect
 	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37 // indirect
 	golang.org/x/sys v0.0.0-20200523222454-059865788121 // indirect
 	golang.org/x/tools v0.0.0-20200515220128-d3bf790afa53 // indirect
 	moul.io/http2curl v1.0.0 // indirect
+	shap_wap/docs v0.0.0-00010101000000-000000000000
+	shap_wap/routes v0.0.0-00010101000000-000000000000
+	shap_wap/routes/products v0.0.0-00010101000000-000000000000 // indirect
 	shop/datamodels v0.0.0-00010101000000-000000000000 // indirect
 	shop/repositories v0.0.0-00010101000000-000000000000 // indirect
 	shop/services v0.0.0-00010101000000-000000000000 // indirect
-	shop/wap/docs v0.0.0-00010101000000-000000000000
-	shop/wap/routes v0.0.0-00010101000000-000000000000
-	shop/wap/routes/products v0.0.0-00010101000000-000000000000 // indirect
 
 )
 
@@ -38,12 +37,10 @@ replace shop/services => ../shop/services
 
 replace shop/routes => ../shop/routes
 
-replace shop/middleware => ../middleware
+replace shap_wap/docs => ./docs
 
-replace shop/wap/docs => ./docs
+replace shap_wap/routes => ./routes
 
-replace shop/wap/routes => ./routes
-
-replace shop/wap/routes/products => ./routes/products
+replace shap_wap/routes/products => ./routes/products
 
 replace github.com/xormplus/core v0.6.3 => xorm.io/core v0.6.3

@@ -8,13 +8,15 @@ require (
 	github.com/go-openapi/swag v0.19.9 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/iris-contrib/swagger/v12 v12.0.1
-	github.com/joshua-chen/go-commons v1.0.4
+	github.com/joshua-chen/go-commons v1.0.10
 	github.com/kataras/iris/v12 v12.1.8
 	github.com/klauspost/compress v1.10.5 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/xormplus/core v0.6.3 // indirect
 	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37 // indirect
 	golang.org/x/tools v0.0.0-20200515220128-d3bf790afa53 // indirect
+	shap_wap/routes v0.0.0-00010101000000-000000000000 // indirect
+	shap_wap/routes/products v0.0.0-00010101000000-000000000000 // indirect
 	shop/datamodels v0.0.0-00010101000000-000000000000 // indirect
 	shop/docs v0.0.0-00010101000000-000000000000
 	shop/repositories v0.0.0-00010101000000-000000000000 // indirect
@@ -22,10 +24,9 @@ require (
 	shop/routes/products v0.0.0-00010101000000-000000000000 // indirect
 	shop/routes/users v0.0.0-00010101000000-000000000000 // indirect
 	shop/services v0.0.0-00010101000000-000000000000 // indirect
-	shop/wap/routes v0.0.0-00010101000000-000000000000 // indirect
-	shop/wap/routes/products v0.0.0-00010101000000-000000000000 // indirect
 	shop/web/routes v0.0.0-00010101000000-000000000000 // indirect
 	shop/web/routes/products v0.0.0-00010101000000-000000000000 // indirect
+
 )
 
 replace shop/datamodels => ./datamodels
@@ -44,9 +45,9 @@ replace shop/routes/products => ./routes/products
 
 replace shop/docs => ./docs
 
-replace shop/wap/routes => ../shop_wap/routes
+replace shap_wap/routes => ../shop_wap/routes
 
-replace shop/wap/routes/products => ../shop_wap/routes/products
+replace shap_wap/routes/products => ../shop_wap/routes/products
 
 replace shop/web/routes => ../shop_web/routes
 

@@ -11,8 +11,6 @@ package products
 import (
 	"github.com/joshua-chen/go-commons/mvc/context/request"
 	"github.com/joshua-chen/go-commons/mvc/context/response"
-	_ "github.com/joshua-chen/go-commons/mvc/models"
-	_ "shop/datamodels"
 	"shop/services"
 
 	"github.com/kataras/iris/v12"

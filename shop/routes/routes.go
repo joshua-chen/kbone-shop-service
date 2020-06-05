@@ -20,7 +20,7 @@ import (
 	_"shop/services"
 	"shop/routes/users"
 	"shop/routes/products"
-	wap "shop/wap/routes"
+	wap "shap_wap/routes"
 	web "shop/web/routes"
 	_ "strings"
 
@@ -37,8 +37,8 @@ import (
 func Register(app *iris.Application) {
 	users.Register(app)
 	products.Register(app)
-	wap.Register(app);
-	web.Register(app);
+	wap.Register(app)
+	web.Register(app)
 }
 
 
