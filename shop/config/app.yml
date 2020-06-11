@@ -5,10 +5,10 @@ secret: xxx-Secret
 anonymousRequset: 
     urls: [/, /swagger]
     prefixes: [/swagger]
-    suffixes: [apidoc.html,/users/newtoken]
+    suffixes: [apidoc.html,/sessions/newtoken]
 staticPath: [/static,./web/static]
 apiPrefix: 
-    base: /api/v1
+    base: /api
     common: /common
     wap: /wap
     web: /web    

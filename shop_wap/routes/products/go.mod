@@ -1,4 +1,4 @@
-module shap_wap/routes/products
+module shop_wap/routes/products
 
 go 1.14
 

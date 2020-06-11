@@ -4,11 +4,11 @@ logLevel: debug
 secret: xxx-Secret
 anonymousRequset: 
     urls: [/, /swagger]
-    prefixes: [/api/v1/, /swagger]
+    prefixes: [/api, /swagger]
     suffixes: [_doc.html]
 staticPath: [/static,./web/static]
 apiPrefix: 
-    base: /api/v1
+    base: /api
     common: /common
     wap: /wap
     web: /web  

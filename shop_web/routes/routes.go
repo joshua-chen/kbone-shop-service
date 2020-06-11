@@ -18,7 +18,7 @@ import (
 	_ "net/http"
 	_"shop/repositories"
 	_"shop/services"
-	"shop/web/routes/products"
+	"shop_web/routes/products"
 	_ "strings"
 
 	_ "github.com/jmespath/go-jmespath"

@@ -50,9 +50,3 @@ func Registe(ctx iris.Context, service services.UserService) (result response.Re
 	return response.DefaultResult(service.Registe(user))
 }
 
-func  NewToken(ctx iris.Context, service services.UserService)  (result response.Result){
-	username := ctx.Params().Get("username")
-	user := models.User{Username:username}
-	token:= service.NewToken(&user)
-	return response.DefaultResult(token)
-}

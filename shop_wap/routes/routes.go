@@ -10,7 +10,7 @@
 package routes
 
 import (
-	"shap_wap/routes/products"
+	"shop_wap/routes/products"
 	"github.com/kataras/iris/v12"
 
 )

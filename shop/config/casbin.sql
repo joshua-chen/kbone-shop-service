@@ -25,14 +25,14 @@ CREATE TABLE `sys_casbin_rule` (
   `sub` varchar(100) DEFAULT NULL,-- v0
   `obj` varchar(100) DEFAULT NULL,-- v1
   `act` varchar(100) DEFAULT NULL,-- v2
-  `ext` varchar(100) DEFAULT NULL,-- v3
+  `suf` varchar(100) DEFAULT NULL,-- v3
   `name` varchar(100) DEFAULT NULL,-- v4
   `des` varchar(100) DEFAULT NULL,-- v5
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_casbin_rule_p_type` (`p_type`),
   KEY `IDX_casbin_rule_act` (`act`),
-  KEY `IDX_casbin_rule_ext` (`ext`),
+  KEY `IDX_casbin_rule_suf` (`suf`),
   KEY `IDX_casbin_rule_name` (`name`),
   KEY `IDX_casbin_rule_des` (`des`),
   KEY `IDX_casbin_rule_sub` (`sub`),

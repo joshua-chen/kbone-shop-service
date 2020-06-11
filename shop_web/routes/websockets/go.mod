@@ -1,4 +1,4 @@
-module shop/web/routes/websockets
+module shop_web/routes/websockets
 
 go 1.14
 

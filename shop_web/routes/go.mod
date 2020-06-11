@@ -1,4 +1,4 @@
-module shop/web/routes
+module shop_web/routes
 
 go 1.14
 

@@ -20,8 +20,9 @@ import (
 	_"shop/services"
 	"shop/routes/users"
 	"shop/routes/products"
-	wap "shap_wap/routes"
-	web "shop/web/routes"
+	"shop/routes/sessions"
+	wap "shop_wap/routes"
+	web "shop_web/routes"
 	_ "strings"
 
 	_ "github.com/jmespath/go-jmespath"
@@ -36,6 +37,7 @@ import (
  
 func Register(app *iris.Application) {
 	users.Register(app)
+	sessions.Register(app)
 	products.Register(app)
 	wap.Register(app)
 	web.Register(app)

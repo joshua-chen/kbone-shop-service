@@ -1,8 +1,7 @@
 package services
 
 import (
-	"github.com/joshua-chen/go-commons/exception"
-	"github.com/joshua-chen/go-commons/middleware/jwt"
+	_"github.com/joshua-chen/go-commons/exception"
 	"github.com/joshua-chen/go-commons/mvc/context/request"
 	"github.com/joshua-chen/go-commons/middleware/models"
 	"github.com/joshua-chen/go-commons/utils/security/aes"
@@ -19,7 +18,6 @@ type UserService interface {
 	Registe(user *models.User) bool
 	GetByID(id int64) (models.User, bool)
 	DeleteByID(id int64) bool
-	NewToken(user *models.User) string
 }
 
 // NewUserService 返回默认的 user 服务层.
@@ -61,15 +59,4 @@ func (s *userService) Registe(user *models.User) bool {
 	}
 
 	return true
-}
-
-func (s *userService) NewToken(user *models.User) string {
-
-	//user:= models.User{}
-	token, err:= jwt.NewToken(user)
-	if err != nil{
-		exception.Instance().Fatal(err)
-	}
-
-	return token
 }
