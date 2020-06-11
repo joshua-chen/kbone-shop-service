@@ -16,7 +16,6 @@ import (
 	_ "errors"
 	"shop/services"
 	_ "time"
-
 	"github.com/kataras/iris/v12"
 
 )
@@ -25,7 +24,9 @@ import (
 
 func  NewToken(ctx iris.Context, service services.SessionService)  (result response.Result){
 	username := ctx.Params().Get("username")
-	user := models.User{Username:username}
+	password := ctx.Params().Get("password")
+	id :=  ctx.URLParamInt64Default("id",-1)
+	user := models.User{Id: id,Username:username,Password: password}
 	token:= service.NewToken(&user)
 	return response.DefaultResult(token)
 }

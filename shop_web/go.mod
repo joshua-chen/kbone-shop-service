@@ -50,7 +50,7 @@ require (
 	golang.org/x/tools v0.0.0-20200515220128-d3bf790afa53 // indirect
 	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4 // indirect
 	moul.io/http2curl v1.0.0 // indirect
-	github.com/joshua-chen/go-commons v1.0.21
+	github.com/joshua-chen/go-commons v1.0.22
 
 )
 

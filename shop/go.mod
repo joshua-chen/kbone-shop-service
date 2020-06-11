@@ -8,7 +8,7 @@ require (
 	github.com/go-openapi/swag v0.19.9 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/iris-contrib/swagger/v12 v12.0.1
-	github.com/joshua-chen/go-commons v1.0.21
+	github.com/joshua-chen/go-commons v1.0.22
 	github.com/kataras/iris/v12 v12.1.8
 	github.com/klauspost/compress v1.10.5 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
