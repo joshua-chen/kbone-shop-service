@@ -10,7 +10,7 @@ package sessions
 
 import (
 	_"github.com/joshua-chen/go-commons/mvc/context/request"
-	"github.com/joshua-chen/go-commons/middleware/models"
+	_"github.com/joshua-chen/go-commons/middleware/models"
 	"github.com/joshua-chen/go-commons/mvc/context/response"
 	_ "github.com/joshua-chen/go-commons/utils/security/aes"
 	_ "errors"
@@ -24,9 +24,7 @@ import (
 
 func  NewToken(ctx iris.Context, service services.SessionService)  (result response.Result){
 	username := ctx.Params().Get("username")
-	password := ctx.Params().Get("password")
 	id :=  ctx.URLParamInt64Default("id",-1)
-	user := models.User{Id: id,Username:username,Password: password}
-	token:= service.NewToken(&user)
+	token := service.NewToken(id,username)
 	return response.DefaultResult(token)
 }

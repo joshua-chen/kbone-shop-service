@@ -16,10 +16,10 @@ import (
 
 type SessionService interface {
 
-	NewToken(user *models.User) string
+	NewToken(userId int64,username string) string
 }
 
-// NewSessionService 返回默认的 user 服务层.
+// NewSessionService 返回默认的 Session 服务层.
 func NewSessionService() SessionService {
 	return &sessionService{
 		repo: repositories.NewUserRepository(),
@@ -31,12 +31,12 @@ type sessionService struct {
 }
 
 
-func (s *sessionService) NewToken(user *models.User) string {
+func (s *sessionService) NewToken(userId int64,username string) string {
 
-	//user:= models.User{}
-	token, err:= jwt.NewToken(user)
+	user:= models.User{Id:userId,Username:username}
+	token, err:= jwt.NewToken(&user)
 	if err != nil{
-		exception.Instance().Fatal(err)
+		exception.Fatal(err)
 	}
 
 	return token
