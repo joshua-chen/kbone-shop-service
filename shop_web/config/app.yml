@@ -1,0 +1,15 @@
+port: 8081
+jwtTimeout: 900 #second
+logLevel: debug
+secret: xxx-Secret
+anonymousRequset: 
+    urls: [/, /swagger]
+    prefixes: [/api, /swagger]
+    suffixes: [_doc.html]
+staticPath: [/static,./web/static]
+apiPrefix: 
+    base: /api
+    common: /common
+    wap: /wap
+    web: /web  
+sqlPath: ../shop/sql/mysql

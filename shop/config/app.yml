@@ -1,0 +1,20 @@
+port: 8080
+jwtTimeout: 900 #second
+logLevel: debug
+secret: xxx-Secret
+anonymousRequset: 
+    urls: [/, /swagger]
+    prefixes: [/swagger]
+    suffixes: [apidoc.html,/sessions/newtoken]
+staticPath: [/static,./web/static]
+apiPrefix: 
+    base: /api
+    common: /common
+    wap: /wap
+    web: /web    
+sqlPath: ./sql/mysql
+swagger:
+    docs:
+        wap: ./wap/docs
+        web: ./web/docs
+        common: ./docs

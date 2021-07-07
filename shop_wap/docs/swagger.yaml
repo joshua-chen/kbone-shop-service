@@ -1,0 +1,38 @@
+basePath: config.AppConfig.ApiPrefix.Common
+info:
+  contact:
+    email: joshua_chen@qq.com
+    name: API Support
+    url: https://github.com/joshua-chen
+  description: Product server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Product API
+  version: "1.0"
+paths:
+  /wap/products:
+    post:
+      description: 产品列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok" "返回用户信息
+          schema:
+            type: string
+        "400":
+          description: err_code：10002 参数错误； err_code：10003 校验错误
+          schema:
+            type: string
+        "401":
+          description: err_code：10001 登录失败
+          schema:
+            type: string
+        "500":
+          description: err_code：20001 服务错误；err_code：20002 接口错误；err_code：20003 无数据错误；err_code：20004 数据库异常；err_code：20005 缓存异常
+          schema:
+            type: string
+      summary: 产品列表
+swagger: "2.0"

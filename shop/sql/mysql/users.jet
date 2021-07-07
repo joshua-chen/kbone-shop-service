@@ -1,0 +1,17 @@
+<sqlMap>
+	<sql id="sql_4_1">
+		select * from user
+	</sql>
+	<sql id="sql_4_2">
+		select * from user where id=? and age=?
+	</sql>
+    <sql id="sql_4_3">
+		select * from user where id=?id and name=?name
+	</sql>
+    <sql id="sql_id_7_1">
+		select * from category where id =?
+	</sql>
+    <sql id="sql_id_7_2">
+		select * from category where id =?id
+	</sql>
+</sqlMap>

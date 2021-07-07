@@ -1,0 +1,142 @@
+package repositories
+
+import (
+	"errors"
+	"sync"
+	"github.com/joshua-chen/go-commons/datasource"
+	"github.com/joshua-chen/go-commons/mvc/context/request"
+	"shop/datamodels"
+
+	"github.com/kataras/golog"
+
+)
+
+// Query代表一种“访客”和它的查询动作。
+type ProductQuery func(datamodels.Product) bool
+
+// ProductRepository会处理一些关于product实例的基本的操作 。
+// 这是一个以测试为目的的接口，即是一个内存中的product库
+// 或是一个连接到数据库的实例。
+type ProductRepository interface {
+
+	Select(query ProductQuery) (product datamodels.Product, found bool)
+	SelectMany( page *request.Pagination) ([]*datamodels.Product, int64) 
+	InsertOrUpdate(product datamodels.Product) (updatedProduct datamodels.Product, err error)
+	Delete(query ProductQuery, limit int) (deleted bool)
+}
+
+// NewProductRepository返回一个新的基于内存的product库。
+// 库的类型在我们的例子中是唯一的。
+func NewProductRepository() ProductRepository {
+	return &productRepository{}
+}
+ 
+
+// productMemoryRepository就是一个"ProductRepository"
+// 它负责存储于内存中的实例数据(map)
+type productRepository struct {
+	mu     sync.RWMutex
+}
+
+const (
+	// ReadOnlyMode will RLock(read) the data .
+	ReadOnlyMode = iota
+	// ReadWriteMode will Lock(read/write) the data.
+	ReadWriteMode
+)
+
+ 
+// Select方法会收到一个查询方法
+// 这个方法给出一个单独的product实例
+// 直到这个功能返回为true时停止迭代。
+//
+// 它返回最后一次查询成功所找到的结果的值
+// 和最后的product模型
+// 以减少caller之间的通信
+//
+// 这是一个很简单但很聪明的雏形方法
+// 我基本在所有会用到的地方使用自从我想到了它
+// 也希望你们觉得好用
+func (r *productRepository) Select(query ProductQuery) (product datamodels.Product, found bool) {
+//	engine := datasource.MasterEngine()
+
+	
+
+	return datamodels.Product{},true
+}
+
+// SelectMany作用相同于Select但是它返回一个切片
+// 切片包含一个或多个实例
+// 如果传入的参数limit<=0则返回所有
+func (r *productRepository) SelectMany( page *request.Pagination) ([]*datamodels.Product, int64) {
+	engine := datasource.MasterEngine()
+
+	golog.Debugf("engine ")	
+	products := make([]*datamodels.Product, 0)
+	
+	s := engine.Limit(page.Limit, page.Offset)
+	if page.SortName != "" {
+		switch page.SortOrder {
+		case "asc":
+			s.Asc(page.SortName)
+		case "desc":
+			s.Desc(page.SortName)
+		}
+	}
+	count, _ := s.FindAndCount(&products)
+	return products, count
+
+}
+
+// InsertOrUpdate添加或者更新一个product实例到（内存）储存中。
+//
+// 返回最新操作成功的实例或抛出错误。
+func (r *productRepository) InsertOrUpdate(product datamodels.Product) (datamodels.Product, error) {
+	id := product.ID
+
+	if id == 0 { // 创建一个新的操作
+		var lastID int64
+		// 找到最大的ID，避免重复。
+		// 在实际使用时您可以使用第三方库去生成
+		// 一个string类型的UUID
+		r.mu.RLock()
+		
+		//数据库操作
+
+		r.mu.RUnlock()
+
+		id = lastID + 1
+		product.ID = id
+
+		// map-specific thing
+		r.mu.Lock()
+	//	r.ds[id] = product
+		r.mu.Unlock()
+
+		return product, nil
+	}
+
+	// 更新操作是基于product.ID的，
+	// 在例子中我们允许了对poster和genre的更新（如果它们非空）。
+	// 当然我们可以只是做单纯的数据替换操作:
+	// r.ds[id] = product
+	// 并注释掉下面的代码;
+	_, exists := r.Select(func(m datamodels.Product) bool {
+		return m.ID == id
+	})
+
+	if !exists { // 当ID不存在时抛出一个error
+		return datamodels.Product{}, errors.New("failed to update a nonexistent product")
+	}
+
+	// map-specific thing
+	r.mu.Lock()
+//	r.ds[id] = current
+	r.mu.Unlock()
+
+	return product, nil
+}
+
+func (r *productRepository) Delete(query ProductQuery, limit int) bool {
+	return true
+}
